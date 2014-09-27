@@ -1,12 +1,8 @@
-comparably/bower_components/
-comparably/node_modules/
-bower_components
-node_modules
+bower_components/
+node_modules/
 dist/
 
-comparably/.idea
-comparably/Comparably.iml
-
 .idea
-What-the-hell-are-web-components.iml
+*.iml
+
 *.sw*
