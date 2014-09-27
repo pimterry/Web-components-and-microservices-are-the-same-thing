@@ -1,0 +1,116 @@
+<template id="login">
+    <style>
+        form {
+            padding: 22px;
+        }
+    </style>
+
+    <form>
+        <input type="text" name="username" placeholder="Username" />
+        <input type="password" name="password" placeholder="Password" />
+        <input type="submit" id="login" value="Log in" />
+    </form>
+</template>
+
+<template id="username">
+    <style>
+        :host {
+            padding: 22px;
+        }
+        #username {
+            font-family: 'Patua One', sans;
+        }
+    </style>
+
+    <span id="username"></span>
+    <button id="logout">Log out</button>
+</template>
+
+<script>
+    (function() {
+        var loginServer = "http://comparably-auth.herokuapp.com";
+
+        var element = Object.create(HTMLElement.prototype);
+
+        var thisDocument = document.currentScript.ownerDocument;
+
+        var loginTemplate = thisDocument.querySelector("template#login");
+        var usernameTemplate = thisDocument.querySelector("template#username");
+
+        element.showLoggedOut = function () {
+            clearChildren(this.shadowRoot);
+            this.shadowRoot.appendChild(document.importNode(loginTemplate.content, true));
+
+            var self = this;
+            this.shadowRoot.querySelector("form").addEventListener("submit", function (e) {
+                e.preventDefault();
+                self.logIn(self.shadowRoot.querySelector("[name=username]").value,
+                           self.shadowRoot.querySelector("[name=password]").value);
+            })
+        }
+
+        element.logIn = function (username, password) {
+            var self = this;
+
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                if (this.status == 200) {
+                    var result = JSON.parse(this.responseText);
+                    self.setAttribute("username", username);
+                } else {
+                    alert("Login failed");
+                }
+            };
+            xhr.addEventListener('error', function () {
+                alert("Error sending login request");
+            });
+
+            xhr.open("POST", loginServer + "/user/" + username + "/login");
+            xhr.send(password);
+        }
+
+        element.showLoggedIn = function (username) {
+            clearChildren(this.shadowRoot);
+
+            var content = document.importNode(usernameTemplate.content, true);
+            content.querySelector("#username").textContent = username;
+
+            this.shadowRoot.appendChild(content);
+
+            var self = this;
+            this.shadowRoot.querySelector("#logout").addEventListener("click", function () {
+                self.logOut();
+            })
+        }
+
+        element.logOut = function () {
+            this.showLoggedOut();
+        }
+
+        element.createdCallback = function() {
+            this.createShadowRoot();
+
+            this.attributeChangedCallback("username", null, this.getAttribute("username"));
+        };
+
+        element.attributeChangedCallback = function (attributeName, oldValue, newValue) {
+            if (attributeName === "username") {
+                if (newValue) {
+                    this.showLoggedIn(newValue);
+                } else {
+                    this.showLoggedOut();
+                }
+            }
+        }
+
+        function clearChildren(node) {
+            while (node.hasChildNodes()) {
+                node.removeChild(node.lastChild);
+            }
+        }
+
+        document.registerElement('user-login', {
+            prototype: element
+        });
+    }());
+</script>

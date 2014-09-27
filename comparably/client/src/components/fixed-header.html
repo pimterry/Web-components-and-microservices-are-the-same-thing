@@ -6,6 +6,12 @@
             display: block;
         }
 
+        content[select='h1']::content > * {
+            font-size: 40px;
+            font-weight: normal;
+            margin: 0;
+        }
+
         nav {
             position: fixed;
             z-index: 100;
@@ -13,12 +19,8 @@
 
             background-color: #fff;
 
-            font-family: 'Lobster', sans;
-            font-size: 30pt;
-
             border-bottom: solid 5px #3B79B2;
             box-shadow: 0 0 5px 2px #000;
-            text-shadow: #024 0 0 1px;
         }
 
         nav .title {
@@ -26,13 +28,25 @@
             padding: 10px 20px 10px;
             color: #3B79B2;
             text-decoration: none;
+
+            font-family: 'Lobster', sans;
+            font-size: 30pt;
+
+            text-shadow: #024 0 0 1px;
+        }
+
+        nav content[select='.header-right']::content > * {
+            float: right;
+            height: 100%;
         }
     </style>
 
     <nav>
         <a href="/" class="title">
-            <content></content>
+            <content select="h1"></content>
         </a>
+
+        <content select=".header-right"></content>
     </nav>
 </template>
 
