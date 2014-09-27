@@ -6,8 +6,8 @@ module.exports = function(grunt) {
                 options: {
                     open: true,
                     keepalive: true,
-                    hostname: "0.0.0.0",
-                    port: process.env.PORT || 8080
+                    hostname: "localhost",
+                    port: 8080
                 }
             }
         },
