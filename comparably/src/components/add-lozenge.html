@@ -1,0 +1,62 @@
+<template>
+    <style>
+        :host {
+            align-self: stretch;
+
+            display: flex;
+            align-items: center;
+            text-align: center;
+
+            background-color: rgba(0, 0, 0, 0.4);
+
+            margin: 40px;
+            width: 350px;
+
+            border-radius: 20px;
+            border: solid 8px rgba(200,200,200,0.5);
+            box-shadow: inset 0 0 5px 5px rgba(0, 0, 0, 0.3);
+
+            cursor: pointer;
+            transition: background-color 0.5s ease;
+        }
+
+        :host(:hover) {
+            background-color: rgba(150, 150, 150, 0.2);
+        }
+
+        .plus {
+            margin: 0 auto;
+            font-family: "Patua One", sans;
+            font-size: 100pt;
+            color: #fff;
+
+            -webkit-user-select: none;
+        }
+    </style>
+
+    <div class="plus">
+        +
+    </div>
+</template>
+
+<script>
+    (function() {
+        var element = Object.create(HTMLElement.prototype);
+
+        var thisDocument = document.currentScript.ownerDocument;
+        var template = thisDocument.querySelector("template");
+
+        element.createdCallback = function () {
+            var templateContent = document.importNode(template.content, true);
+            this.createShadowRoot().appendChild(templateContent);
+
+            this.addEventListener("click", function () {
+                this.dispatchEvent(new Event("add-item"));
+            });
+        };
+
+        document.registerElement('add-lozenge', {
+            prototype: element
+        });
+    }());
+</script>

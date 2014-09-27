@@ -1,0 +1,54 @@
+<template>
+    <style>
+        :host {
+            width: 100%;
+            height: 75px;
+            display: block;
+        }
+
+        nav {
+            position: fixed;
+            z-index: 100;
+            width: 100%;
+
+            background-color: #fff;
+
+            font-family: 'Lobster', sans;
+            font-size: 30pt;
+
+            border-bottom: solid 5px #3B79B2;
+            box-shadow: 0 0 5px 2px #000;
+            text-shadow: #024 0 0 1px;
+        }
+
+        nav .title {
+            display: inline-block;
+            padding: 10px 20px 10px;
+            color: #3B79B2;
+            text-decoration: none;
+        }
+    </style>
+
+    <nav>
+        <a href="/" class="title">
+            <content></content>
+        </a>
+    </nav>
+</template>
+
+<script>
+    (function() {
+        var element = Object.create(HTMLElement.prototype);
+
+        var thisDocument = document.currentScript.ownerDocument;
+        var template = thisDocument.querySelector("template");
+
+        element.createdCallback = function() {
+            this.createShadowRoot().appendChild(template.content);
+        };
+
+        document.registerElement('fixed-header', {
+            prototype: element
+        });
+    }());
+</script>

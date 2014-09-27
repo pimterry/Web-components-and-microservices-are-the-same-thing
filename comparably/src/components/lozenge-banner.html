@@ -1,0 +1,61 @@
+<template>
+    <style>
+        h1 {
+            width: 100%;
+            margin: 40px 0 40px -20px;
+            padding: 20px 20px;
+            position: relative;
+
+            font-family: 'Patua One', serif;
+            font-weight: lighter;
+            font-size: 40pt;
+
+            background-color: #3B79B2;
+            outline: solid #222 4px;
+
+            text-align: center;
+        }
+
+        h1:before, h1:after {
+            position: absolute;
+            bottom: -16px;
+            content: '';
+
+            border-style: solid;
+            border-color: #3B79B2 transparent transparent transparent;
+        }
+
+        h1:before {
+            left: 2px;
+            border-width: 12px 0 0 15px;
+        }
+
+        h1:after {
+            right: 2px;
+            border-width: 12px 15px 0 0;
+        }
+    </style>
+
+    <h1 contenteditable>
+        <content></content>
+    </h1>
+</template>
+
+<script>
+    (function() {
+        var element = Object.create(HTMLHeadingElement.prototype);
+
+        var thisDocument = document.currentScript.ownerDocument;
+        var template = thisDocument.querySelector("template");
+
+        element.createdCallback = function() {
+            var shadowDom = this.createShadowRoot();
+            var templateContent = document.importNode(template.content, true);
+            shadowDom.appendChild(templateContent);
+        };
+
+        document.registerElement('lozenge-banner', {
+            prototype: element
+        });
+    }());
+</script>

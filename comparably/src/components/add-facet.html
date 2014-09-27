@@ -1,0 +1,40 @@
+<template>
+    <style>
+    @import "src/facet.css";
+
+    :host {
+        border-bottom: solid #222 3px;
+        text-align: center;
+
+        background-color: #3B79B2;
+        color: #000;
+        font-weight: bolder;
+        cursor: pointer;
+    }
+    </style>
+
+    + Add Facet
+</template>
+
+<script>
+    (function() {
+        var element = Object.create(HTMLElement.prototype);
+
+        var thisDocument = document.currentScript.ownerDocument;
+        var template = thisDocument.querySelector("template");
+
+        element.createdCallback = function() {
+            var shadowDom = this.createShadowRoot();
+            var templateContent = document.importNode(template.content, true);
+            shadowDom.appendChild(templateContent);
+
+            this.addEventListener("click", function () {
+                this.dispatchEvent(new Event("add-facet"));
+            });
+        };
+
+        document.registerElement('add-facet', {
+            prototype: element
+        });
+    }());
+</script>

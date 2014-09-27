@@ -1,0 +1,61 @@
+<link rel="import" href="lozenge-banner.html" />
+<link rel="import" href="add-facet.html" />
+
+<template>
+    <style>
+        section {
+            display: inline-block;
+            position: relative;
+
+            margin: 40px 50px;
+
+            background-color: #fff;
+
+            padding-bottom: 40px;
+            border-radius: 20px;
+
+            text-align: left;
+            vertical-align: top;
+        }
+
+        section:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+
+            border-radius: 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 1),
+            0 0 40px rgba(0, 0, 0, 0.5) inset;
+
+            pointer-events: none;
+        }
+    </style>
+
+    <section>
+        <content></content>
+
+        <add-facet></add-facet>
+    </section>
+</template>
+
+<script>
+    (function() {
+        var element = Object.create(HTMLElement.prototype);
+
+        var thisDocument = document.currentScript.ownerDocument;
+        var template = thisDocument.querySelector("template");
+
+        element.createdCallback = function() {
+            var shadowDom = this.createShadowRoot();
+            var templateContent = document.importNode(template.content, true);
+            shadowDom.appendChild(templateContent);
+        };
+
+        document.registerElement('comparison-lozenge', {
+            prototype: element
+        });
+    }());
+</script>

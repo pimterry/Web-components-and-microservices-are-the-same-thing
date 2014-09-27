@@ -1,0 +1,78 @@
+<script src="../sentiment.js"></script>
+
+<template>
+    <style>
+        @import "src/facet.css";
+
+        :host([rating=good]) {
+            background-color: #61FF9D;
+        }
+
+        :host([rating=ok]) {
+            background-color: #ddd;
+        }
+
+        :host([rating=bad]) {
+            background-color: #FF6961;
+        }
+
+        :host {
+            padding-right: 29px;
+            display: block;
+        }
+    </style>
+
+    <content></content>
+
+</template>
+
+<script>
+    (function() {
+        var element = Object.create(HTMLElement.prototype);
+
+        var thisDocument = document.currentScript.ownerDocument;
+        var template = thisDocument.querySelector("template");
+
+        element.createdCallback = function () {
+            var self = this;
+            var shadowDom = self.createShadowRoot();
+
+            shadowDom.appendChild(document.importNode(template.content, true));
+
+            self.updateScoreFromText();
+            new MutationObserver(function (mutation) {
+                self.updateScoreFromText();
+            }).observe(self, { childList: true, subtree: true, characterData: true });
+        };
+
+        element.updateScoreFromText = function () {
+            var rawScore = sentiment(this.textContent).comparative;
+            var range = 10;
+            var multiplier = 100/range;
+            var offset = range/2;
+            var score = ((rawScore + offset) * multiplier);
+
+            this.setAttribute("score", score.toString());
+        };
+
+        element.setScore = function (score) {
+            if (score <= 40) {
+                this.setAttribute("rating", "bad");
+            } else if (score >= 60) {
+                this.setAttribute("rating", "good");
+            } else {
+                this.setAttribute("rating", "ok");
+            }
+        }
+
+        element.attributeChangedCallback = function (attrName, oldVal, newVal) {
+            if (attrName === "score") {
+                this.setScore(newVal);
+            }
+        }
+
+        document.registerElement('item-facet', {
+            prototype: element
+        });
+    }());
+</script>

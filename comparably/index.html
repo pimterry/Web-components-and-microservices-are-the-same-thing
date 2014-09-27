@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Comparably</title>
+
+    <link rel="stylesheet" href="bower_components/normalize-css/normalize.css" />
+    <link rel="stylesheet" href="src/base.css" />
+
+    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Patua+One' rel='stylesheet' type='text/css'>
+
+    <link rel="import" href="src/components/fixed-header.html" />
+    <link rel="import" href="src/components/lozenge-list.html" />
+    <link rel="import" href="src/components/comparison-lozenge.html" />
+    <link rel="import" href="src/components/add-lozenge.html" />
+    <link rel="import" href="src/components/item-facet.html" />
+</head>
+<body>
+    <fixed-header>Comparably</fixed-header>
+
+    <lozenge-list>
+        <!-- ko foreach: items -->
+            <comparison-lozenge data-bind="event: { 'add-facet': addFacet }">
+                <lozenge-banner data-bind="editableText: name"></lozenge-banner>
+                <!-- ko foreach: facets -->
+                    <item-facet data-bind="twoWayAttr: { score: score },
+                                           editableText: description">
+                    </item-facet>
+                <!-- /ko -->
+            </comparison-lozenge>
+        <!-- /ko -->
+        <add-lozenge data-bind="event: { 'add-item': addItem }"></add-lozenge>
+    </lozenge-list>
+
+    <script src="bower_components/knockout/dist/knockout.debug.js"></script>
+    <script src="bower_components/knockout-mapping/knockout.mapping.js"></script>
+
+    <script src="src/knockout-bindings/editable-binding.js"></script>
+    <script src="src/knockout-bindings/twoWayAttr-binding.js"></script>
+
+    <script src="src/ItemViewModel.js"></script>
+    <script src="src/ComparisonViewModel.js"></script>
+
+    <script>
+        (function () {
+            var initialData = {
+                items: [
+                    { name: "My current phone",
+                    facets: [{description: "Nice big screen"},
+                             {description: "Not bendy"},
+                             {description: "Dodgy camera"}]},
+                    { name: "iPhone 6",
+                    facets: [{description: "Awkward size screen"},
+                             {description: "Bendy"},
+                             {description: "Good camera"}]}
+                ]
+            };
+
+            var data = new ComparisonViewModel(initialData);
+            ko.applyBindings(data, document.querySelector("lozenge-list"));
+        })();
+    </script>
+</body>
+</html>

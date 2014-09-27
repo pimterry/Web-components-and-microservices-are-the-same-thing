@@ -1,0 +1,418 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    title What the hell are Web Components
+
+    link(href='http://fonts.googleapis.com/css?family=Open+Sans', rel='stylesheet', type='text/css')
+    link(href='http://fonts.googleapis.com/css?family=Patua+One', rel='stylesheet' type='text/css')
+    link(rel='stylesheet', type='text/css', href='build/build.css')
+
+  body
+
+    article
+
+      section
+        h1 What the hell are Web Components?
+        img(src='images/web-components.svg')
+
+      section
+        h2
+          ul
+            li &lt;Template&gt;
+            li HTML Imports
+            li Shadow DOM
+            li Custom Elements
+
+      section
+        h2 Current Templates
+        pre
+          code.language-markup.
+            &lt;div id="img-with-caption-template" style="display: none"&gt;
+              &lt;img src="/default-image.png" /&gt;
+              &lt;h3 class="title"&gt;Super cool image!&lt;/h3&gt;
+            &lt;/div&gt;
+
+      section
+        h2 Current Templates (Knockout)
+        pre
+          code.language-markup.
+            &lt;script type="text/html" id="img-with-caption"&gt;
+              &lt;img src="/default-image.png" /&gt;
+              &lt;h3 class="title"&gt;Super cool image&lt;/h3&gt;
+            &lt;/script&gt;
+
+      section
+        h2 &lt;Template&gt;
+        pre
+          code.language-markup.
+            &lt;template id="img-with-caption"&gt;
+              &lt;img src="/default-image.png" /&gt;
+              &lt;h3 class="title"&gt;Super cool image&lt;/h3&gt;
+            &lt;/template&gt;
+
+      section
+        h2 &lt;Template&gt;
+        pre
+          code.language-markup.
+            &lt;template id="img-with-caption"&gt;
+              &lt;img src="/default-image.png" /&gt;
+              &lt;h3 class="title"&gt;Super cool image&lt;/h3&gt;
+            &lt;/template&gt;
+
+            &lt;script type="text/javascript"&gt;
+                var template = document.querySelector("#img-with-caption");
+                var content = document.importNode(template.content, true);
+                document.body.appendNode(content);
+            &lt;/script&gt;
+
+      section
+        h2 HTML Imports
+        pre
+          code.language-markup.
+            &lt;head&gt;
+              &lt;link rel="import" href="otherFile.html" /&gt;
+            &lt;/head&gt;
+
+      section
+        h2 HTML Imports
+        div.sideBySide
+          div
+            h3 index.html
+            pre
+              code.language-markup.
+                &lt;head&gt;
+                  &lt;link rel="import"
+                        href="import.html" /&gt;
+                &lt;/head&gt;
+          div
+            h3 import.html
+            pre
+              code.language-markup.
+                Some HTML!
+
+                &lt;style&gt;
+                  h1 { font-size: 500%; }
+                &lt;/style&gt;
+
+                &lt;script&gt;
+                window.aThing = function () {
+                  ...
+                }
+                &lt;/script&gt;
+
+      section
+        h2 Shadow DOM
+        <video src="http://bit.ly/1wMMbE6" controls muted></video>
+
+      section
+        h2 Shadow DOM
+
+        pre
+          code.language-javascript.
+            var div = document.querySelector("#myDiv")
+            var shadow = div.createShadowRoot();
+
+            shadow.innerHTML = '&lt;h3&gt;Dom-invisible headline!&lt;/h3&gt;';
+
+      section
+        h2 Shadow DOM
+
+        div(id="myDiv") Some boring content
+
+        script(type="text/javascript")
+          |  var div = document.querySelector("#myDiv")
+          |  var shadow = div.createShadowRoot();
+          |  shadow.innerHTML = '<h3>Dom-invisible headline!</h3>';
+
+        pre
+          code.language-markup.
+            &lt;div id="myDiv"&gt;Some boring content&lt;div&gt;
+
+            &lt;script type="text/javascript"&gt;
+              var div = document.querySelector("#myDiv")
+              var shadow = div.createShadowRoot();
+
+              shadow.innerHTML = '&lt;h3&gt;Dom-invisible headline!&lt;/h3&gt;';
+            &lt;/script&gt;
+
+      section
+        h2 Shadow DOM
+        pre
+          code.language-markup.
+            &lt;div id="myDiv2"&gt;
+              Real content
+            &lt;/div&gt;
+
+            &lt;script type="text/javascript"&gt;
+              var div = document.querySelector("#myDiv2")
+              var shadow = div.createShadowRoot();
+              shadow.innerHTML =
+              "&lt;h3&gt;" +
+                "Originally: &lt;i&gt;&lt;content&gt;&lt;/content&gt;&lt;/i&gt;" +
+              "&lt;/h3&gt;";
+            &lt;/script&gt;
+        | <div id="myDiv2">
+        |    Real content
+        | </div>
+        | <script>
+        | var div = document.querySelector("#myDiv2");
+        | var shadow = div.createShadowRoot();
+        | shadow.innerHTML = "<h3>Originally: <i><content></content></i></h3>";
+        | </script>
+
+      section
+        h2 Custom Elements
+
+        | <template id="navbar">
+        |  <style>@import 'http://getbootstrap.com/dist/css/bootstrap.min.css';</style>
+        |  <div class="bs-example bs-navbar-top-example">
+        |    <nav class="navbar navbar-default navbar-inverse" role="navigation">
+        |      <div class="container-fluid">
+        |        <div class="navbar-header">
+        |          <button type="button" class="navbar-toggle collapsed"
+        |                  data-toggle="collapse"
+        |                  data-target="#bs-example-navbar-collapse-6">
+        |            <span class="sr-only">Toggle navigation</span>
+        |            <span class="icon-bar"></span>
+        |            <span class="icon-bar"></span>
+        |            <span class="icon-bar"></span>
+        |          </button>
+        |          <a class="navbar-brand" href="#">Brand</a>
+        |        </div>
+        |        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+        |          <ul class="nav navbar-nav">
+        |            <li class="active"><a href="#">Home</a></li>
+        |            <li><a href="#">Link</a></li>
+        |            <li><a href="#">Link</a></li>
+        |          </ul>
+        |        </div>
+        |      </div>
+        |    </nav>
+        |  </div>
+        | </template>
+        | <div class="navbar-target" style="width: 100%"></div>
+        | <script defer async>
+        |  window.setTimeout(function () {
+        |   var template = document.querySelector("template#navbar");
+        |   var target = document.querySelectorAll(".navbar-target");
+        |   [].forEach.call(target, function(t) {
+        |     var shadow = t.createShadowRoot();
+        |     shadow.appendChild(document.importNode(template.content, true));
+        |   });
+        |  }, 0);
+        | </script>
+
+      section
+        h2 Custom Elements
+
+        | <div class="navbar-target" style="width: 100%"></div>
+
+        pre(style='height: 70%; overflow-x: hidden')
+          code.language-markup.
+            &lt;div class="bs-example bs-navbar-top-example"&gt;
+              &lt;nav class="navbar navbar-default navbar-inverse" role="navigation"&gt;
+                &lt;div class="container-fluid"&gt;
+                  &lt;div class="navbar-header"&gt;
+                    &lt;button type="button" class="navbar-toggle collapsed"
+                            data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-6"&gt;
+                      &lt;span class="sr-only"&gt;Toggle navigation&lt;/span&gt;
+                      &lt;span class="icon-bar"&gt;&lt;/span&gt;
+                      &lt;span class="icon-bar"&gt;&lt;/span&gt;
+                      &lt;span class="icon-bar"&gt;&lt;/span&gt;
+                    &lt;/button&gt;
+                    &lt;a class="navbar-brand" href="#"&gt;Brand&lt;/a&gt;
+                  &lt;/div&gt;
+
+                  &lt;div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"&gt;
+                    &lt;ul class="nav navbar-nav"&gt;
+                      &lt;li class="active"&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                      &lt;li&gt;&lt;a href="#"&gt;Link&lt;/a&gt;&lt;/li&gt;
+                      &lt;li&gt;&lt;a href="#"&gt;Link&lt;/a&gt;&lt;/li&gt;
+                    &lt;/ul&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/nav&gt;
+            &lt;/div&gt;
+            
+      section
+        h2 Custom Elements
+        | <div class="navbar-target" style="width: 60%"></div>
+        pre
+          code.language-markup.
+            &lt;nav-bar inverted&gt;
+              &lt;ul&gt;
+                &lt;li&gt;Home&lt;/li&gt;
+                &lt;li&gt;Link&lt;/li&gt;
+                &lt;li&gt;Link&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/nav-bar&gt;
+
+      section
+        h2 Custom Elements
+        pre
+          code.language-javascript.
+            var NavBar = document.registerElement('nav-bar');
+
+            var element = new NavBar();
+            document.body.appendChild(element);
+
+      section
+        h2 Custom Elements
+        pre
+          code.language-javascript.
+            document.registerElement('nav-bar');
+
+            var element = document.createElement("nav-bar")
+            document.body.appendChild(element);
+
+      section
+        h2 Custom Elements
+        pre
+          code.language-javascript.
+            var NavBar = document.registerElement('nav-bar');
+
+        pre
+          code.language-markup.
+            &lt;nav-bar inverted&gt;
+              &lt;ul&gt;
+                &lt;li&gt;Home&lt;/li&gt;
+                &lt;li&gt;Link&lt;/li&gt;
+                &lt;li&gt;Link&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/nav-bar&gt;
+
+      section
+        h2 Custom Elements
+        pre
+          code.language-javascript.
+            var NavBarPrototype = Object.create(HTMLElement.prototype);
+
+            NavBarPrototype.doThings = function () { ... }
+
+            document.registerElement('nav-bar', {
+                prototype: NavBarPrototype
+            });
+
+            ...
+
+            document.querySelector("nav-bar#my-menu").doThings();
+
+      section
+        h2 Custom Elements
+        pre
+          code.language-javascript.
+            var NavBarPrototype = Object.create(HTMLElement.prototype);
+
+            NavBarPrototype.createdCallback = function () { ... }
+
+            NavBarPrototype.attachedCallback = function () { ... }
+
+            NavBarPrototype.detachedCallback = function () { ... }
+
+            NavBarPrototype.attributeChangedCallback = function () { ... }
+
+            document.registerElement('nav-bar', {
+                prototype: NavBarPrototype
+            });
+
+      section
+        h2 Custom Elements
+        pre
+          code.language-javascript.
+            var NavBarPrototype = Object.create(HTMLElement.prototype);
+
+            NavBarPrototype.createdCallback = function () {
+              this.innerHTML = '&lt;div class="bs-example bs-navbar-top-example"&gt; \
+                                   &lt;nav class="navbar navbar-default navbar inverse"> \
+                                   ...';
+            };
+
+            document.registerElement('nav-bar', {
+                prototype: NavBarPrototype
+            });
+
+      section
+        h2.full-slide Let's put it together
+
+      section
+        h2 Actually using this?
+        | <div id="tableWrapper">
+        |   <table>
+        |     <thead>
+        |       <tr>
+        |         <th rowspan="2"></th>
+        |         <th rowspan="2">Specced</th>
+        |         <th colspan="5">Implementation</th>
+        |       </tr>
+        |       <tr>
+        |         <th>Polyfill</th>
+        |         <th>Chrome / Opera</th>
+        |         <th>Firefox</th>
+        |         <th>Safari</th>
+        |         <th>IE</th>
+        |       </tr>
+        |     </thead>
+        |     <tbody>
+        |       <tr>
+        |         <th>Templates</th>
+        |         <td class="yes"><a href="https://html.spec.whatwg.org/multipage/scripting.html#the-template-element"></a></td>
+        |         <td class="yes"><a href="#polyfills"></a></td>
+        |         <td class="yes"><a href="http://www.chromestatus.com/features/5207287069147136">Stable</a></td>
+        |         <td class="yes"><a href="http://caniuse.com/#feat=template">Stable</a></td>
+        |         <td class="yes"><a href="http://caniuse.com/#feat=template">8</a></td>
+        |         <td class="no"></td>
+        |       </tr>
+        |       <tr>
+        |         <th>HTML Imports</th>
+        |         <td class="yes"><a href="http://w3c.github.io/webcomponents/spec/imports/"></a></td>
+        |         <td class="yes"><a href="#polyfills"></a></td>
+        |         <td class="yes"><a href="http://www.chromestatus.com/features/5144752345317376">Stable</a></td>
+        |         <td class="kinda"><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=877072">Behind flag</a></td>
+        |         <td class="no"></td>
+        |         <td class="no"></td>
+        |       </tr>
+        |       <tr>
+        |         <th>Custom Elements</th>
+        |         <td class="yes"><a href="http://w3c.github.io/webcomponents/spec/custom/"></a></td>
+        |         <td class="yes"><a href="#polyfills"></a></td>
+        |         <td class="yes"><a href="http://www.chromestatus.com/features/4642138092470272">Stable</a></td>
+        |         <td class="yes"><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=889230">Behind flag</a></td>
+        |         <td class="no"></td>
+        |         <td class="no"></td>
+        |       </tr>
+        |       <tr>
+        |         <th>Shadow DOM</th>
+        |         <td class="yes"><a href="http://w3c.github.io/webcomponents/spec/shadow/"></a></td>
+        |         <td class="yes"><a href="#polyfills"></a></td>
+        |         <td class="yes"><a href="http://www.chromestatus.com/features/4507242028072960">Stable</a></td>
+        |         <td class="yes"><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=806506">Behind flag</a></td>
+        |         <td class="no"></td>
+        |         <td class="no"></td>
+        |       </tr>
+        |     </tbody>
+        |   </table>
+        | </div>
+        p (From <a href="http://jonrimmer.github.io/are-we-componentized-yet/">Are We Componentized Yet?</a>)
+
+      section
+        h2 Polyfills
+        ul
+          li Polymer
+          li X-Tag
+          li Bosonic
+
+      section
+        h2 Frameworks
+        ul
+          li Knockout
+          li Ember
+          li Angular (in 2.0)
+
+      section
+        h2 Web components!
+        h3 Any questions?
+
+    script(src='build/build.js')

@@ -1,0 +1,12 @@
+Similarities:
+* Encapsulation - Shadow DOM, enforced HTTP boundaries
+* Reusability/configurability - Ties into standard HTTP/CSS infrastructure
+* Evolvability - imports and dep resolution infrastructure
+* Built on a common medium - HTTP/HTML
+* Clearly defined interfaces and interactions
+
+Narrative:
+MS/WC = Encapsulation & Common Media
+Encapsulation + Common Media = Evolvability
+
+Evolvability = Polyglot architectures, disposable everything (devops), agility, layering

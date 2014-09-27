@@ -1,0 +1,20 @@
+html, body {
+    display: inline-block;
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+    background-image: url("images/binding_dark.png");
+}
+
+[contentEditable] {
+    cursor: text;
+    transition-property: color, box-shadow;
+    transition-duration: 0.3s;
+}
+
+[contentEditable]:focus {
+    outline: none;
+
+    color: #ddd;
+    box-shadow: inset 0 0 0 500px rgba(0,0,0,0.5);
+}

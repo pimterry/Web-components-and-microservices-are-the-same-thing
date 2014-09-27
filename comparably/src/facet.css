@@ -1,0 +1,15 @@
+:host {
+    font-family: "Open Sans", sans;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px 10px;
+    margin: 0;
+    display: block;
+
+    background-color: #fff;
+    color: #222;
+    border-top: solid #222 3px;
+
+    font-size: 30px;
+    min-height: 84px;
+}

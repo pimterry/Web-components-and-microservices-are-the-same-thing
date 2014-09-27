@@ -1,0 +1,36 @@
+<template>
+    <style>
+        :host {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        ::content > * {
+            flex-shrink: 0;
+        }
+    </style>
+
+    <content></content>
+
+</template>
+
+<script>
+    (function() {
+        var element = Object.create(HTMLElement.prototype);
+
+        var thisDocument = document.currentScript.ownerDocument;
+        var template = thisDocument.querySelector("template");
+
+        element.createdCallback = function() {
+            var shadowDom = this.createShadowRoot();
+            var templateContent = document.importNode(template.content, true);
+            shadowDom.appendChild(templateContent);
+        };
+
+        document.registerElement('lozenge-list', {
+            prototype: element
+        });
+    }());
+</script>
