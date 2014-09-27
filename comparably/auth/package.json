@@ -1,0 +1,9 @@
+{
+    "name": "comparably-auth",
+    "description": "Comparably Authentication Microservice",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "express": "4.x"
+    }
+}
