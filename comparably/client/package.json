@@ -5,5 +5,8 @@
         "grunt-cli": "~0.1.9",
         "grunt-contrib-connect": "~0.8.0",
         "grunt-gh-pages": "~0.9.1"
+    },
+    "scripts": {
+        "start": "grunt server"
     }
 }
