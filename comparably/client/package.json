@@ -1,7 +1,8 @@
 {
   "private": true,
   "dependencies": {
-    "static-server": "~1.0.1"
+    "static-server": "~1.0.1",
+    "bower": "~1.3.11"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -11,6 +12,6 @@
   },
   "scripts": {
     "start": "node node_modules/static-server/bin/static-server.js -p $PORT",
-    "postinstall": "bower install"
+    "postinstall": "node node_modules/bower/bin/bower install"
   }
 }
