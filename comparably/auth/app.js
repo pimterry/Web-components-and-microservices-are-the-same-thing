@@ -2,9 +2,11 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var uuid = require('uuid');
+var cors = require('cors');
 
 var app = express();
 app.use(bodyParser.text());
+app.use(cors());
 
 mongoose.connect(process.env.MONGOLAB_URI);
 
@@ -53,10 +55,7 @@ app.post('/user/:username/login', function (req, res) {
     var username = req.params.username;
     var password = req.body;
 
-    console.log("Login for '%s'/'%s'", username, password);
     User.findOne({name: username, password: password}, function (err, user) {
-        console.log("found: %s", user);
-
         if (err) {
             res.status(500).send(err);
         } else if (!user) {
