@@ -24,6 +24,8 @@ app.post('/user/:username/login', function (req, res) {
 });
 
 var port = process.env.PORT || 8085;
+
+console.log("Starting server on %d", port)
 var server = app.listen(port, function() {
     console.log('Listening on port %d', server.address().port);
 });
