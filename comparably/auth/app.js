@@ -1,26 +1,76 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var uuid = require('uuid');
 
 var app = express();
 app.use(bodyParser.text());
 
+mongoose.connect(process.env.MONGOLAB_URI);
+
+var User = mongoose.model('User', { name: { type: String, unique: true },
+                                    password: String,
+                                    token: { type: String, unique: true } });
+
+function generateToken() {
+    return uuid.v4();
+}
+
+// Takes a token, returns with 'valid' bool, and the matching user 'id' (if valid)
 app.get('/validate/token/:token', function (req, res) {
     var token = req.params.token;
-    res.json({ token: token, valid: token === "1" });
+
+    User.findOne({token: token}, function (err, user) {
+        if (err) {
+            res.status(500).send(err);
+        } else if (!user) {
+            res.json({ valid: false });
+        } else {
+            res.json({ id: user.id, valid: true });
+        }
+    });
 });
 
+// Creates a new user. Returns with the 'username' and a valid login 'token'
+app.post('/user/:username/create', function (req, res) {
+    var username = req.params.username;
+    var password = req.body;
+
+    var token = generateToken();
+    var user = new User({name: username, password: password, token: token});
+
+    user.save(function (err) {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.json({ username: user.name, token: user.token });
+        }
+    });
+});
+
+// Logs in as an existing user, returning the 'username' and a valid login 'token'
 app.post('/user/:username/login', function (req, res) {
     var username = req.params.username;
     var password = req.body;
 
-    var success = (username === "tim" && password === "password1");
+    console.log("Login for '%s'/'%s'", username, password);
+    User.findOne({name: username, password: password}, function (err, user) {
+        console.log("found: %s", user);
 
-    if (success) {
-        var token = 1;
-        res.json({ username: username, token: token });
-    } else {
-        res.status(401).end();
-    }
+        if (err) {
+            res.status(500).send(err);
+        } else if (!user) {
+            res.status(401).end();
+        } else {
+            user.token = generateToken();
+            user.save(function (err) {
+                if (err) {
+                    res.status(500).send(err);
+                }
+                res.json({ username: user.name, token: user.token });
+            });
+        }
+    });
 });
 
 var port = process.env.PORT || 8085;
