@@ -10,3 +10,21 @@ MS/WC = Encapsulation & Common Media
 Encapsulation + Common Media = Evolvability
 
 Evolvability = Polyglot architectures, disposable everything (devops), agility, layering
+
+Talk structure:
+Web components:
+* Templates
+* HTML Imports
+* Shadow DOM
+* Custom elements
+* Example
+* This sounds like a tool, but really a set of patterns
+Microservices:
+* Monoliths
+* Structure and patterns
+* Example
+Both:
+* Encapsulation!
+* Common medium!
+* = EVOLVABILITY
+* = Polyglot everything, disposable everything = agility agility agility
