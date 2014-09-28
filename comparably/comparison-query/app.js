@@ -28,8 +28,8 @@ app.get('/comparisons/user/:userId', function (req, res) {
 // Returns all comparisons owned by a given user
 app.get('/comparisons/guest', function (req, res) {
     var query = "match (c:Comparison)" +
-      "where NOT (:User)-[:owns]->(c)" +
-      "return c";
+                "where NOT (:User)-[:owns]->(c)" +
+                "return c";
 
     db.query(query, function (err, results) {
         if (err) {
@@ -68,7 +68,7 @@ function comparisonResultsToItemList(results) {
     }).reduce(function (items, row) {
         var item = dataWithId(row.i);
         items[item.id] = items[item.id] ||
-        { id: item.id, name: item.name, facets: [] };
+                         { id: item.id, name: item.name, facets: [] };
 
         items[item.id].facets.push(dataWithId(row.f));
         return items;
