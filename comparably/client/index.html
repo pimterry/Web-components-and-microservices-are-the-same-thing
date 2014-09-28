@@ -32,36 +32,35 @@
         </user-login>
     </fixed-header>
 
-    <lozenge-list style="display: none" data-bind="visible: true">
-        <!-- ko if: loading() -->
+    <!-- ko if: loading() -->
         <loading-spinner></loading-spinner>
-        <!-- /ko -->
-        <!-- ko if: !loading() -->
-            <!-- ko with: $data.comparison -->
-                <!-- ko foreach: items -->
-                    <comparison-lozenge>
-                        <lozenge-banner data-bind="editableText: name"></lozenge-banner>
-                        <!-- ko foreach: facets -->
-                            <item-facet data-bind="twoWayAttr: { score: score },
-                                                   editableText: description">
-                            </item-facet>
-                        <!-- /ko -->
+    <!-- /ko -->
 
-                        <add-facet data-bind="event: { 'add-facet': addFacet }"></add-facet>
-                    </comparison-lozenge>
-                <!-- /ko -->
-
-                <add-lozenge data-bind="event: { 'add-item': addItem }"></add-lozenge>
-            <!-- /ko -->
-
-            <!-- ko with: !$data.comparison() && $data.user() -->
+    <lozenge-list data-bind="if: !loading()">
+        <!-- ko with: $data.comparison -->
+            <!-- ko foreach: items -->
                 <comparison-lozenge>
-                    <lozenge-banner>Comparisons</lozenge-banner>
-                    <!-- ko foreach: comparisons() -->
-                        <item-facet data-bind="text: name, click: $root.loadComparison"></item-facet>
+                    <lozenge-banner data-bind="editableText: name"></lozenge-banner>
+                    <!-- ko foreach: facets -->
+                        <item-facet data-bind="twoWayAttr: { score: score },
+                                               editableText: description">
+                        </item-facet>
                     <!-- /ko -->
+
+                    <add-facet data-bind="event: { 'add-facet': addFacet }"></add-facet>
                 </comparison-lozenge>
             <!-- /ko -->
+
+            <add-lozenge data-bind="event: { 'add-item': addItem }"></add-lozenge>
+        <!-- /ko -->
+
+        <!-- ko if: !$data.comparison() -->
+            <comparison-lozenge>
+                <lozenge-banner>Comparisons</lozenge-banner>
+                <!-- ko foreach: user().comparisons() -->
+                    <item-facet data-bind="text: name, click: $root.loadComparison"></item-facet>
+                <!-- /ko -->
+            </comparison-lozenge>
         <!-- /ko -->
     </lozenge-list>
 
@@ -81,21 +80,29 @@
     <script>
         (function () {
             var viewModel = {
-                loading: ko.observable(false),
+                loading: ko.observable(0), // Count of number of outstanding requests
                 comparison: ko.observable(),
-                user: ko.observable(new GuestUserViewModel()),
+                user: ko.observable(),
 
                 loadComparison: function (comparison) {
                     window.location.hash = "#" + comparison.id;
                 },
 
                 login: function (_, event) {
-                    viewModel.user(new UserViewModel(event.detail));
+                    viewModel.user(new UserViewModel(event.detail, viewModel.loading));
+                    unloadComparison();
                 },
                 logout: function () {
-                    viewModel.user(new GuestUserViewModel());
+                    viewModel.user(new GuestUserViewModel(viewModel.loading));
+                    unloadComparison();
                 }
             };
+            viewModel.user(new GuestUserViewModel(viewModel.loading));
+
+            function unloadComparison() {
+                viewModel.comparison(null);
+                window.location.hash = "";
+            }
 
             ko.applyBindings(viewModel, document.querySelector("body"));
 
@@ -104,7 +111,7 @@
                 var comparisonId = parseInt(hash, 10);
 
                 if (comparisonId) {
-                    viewModel.loading(true);
+                    viewModel.loading(viewModel.loading() + 1);
 
                     comparisonQuery.loadComparison(comparisonId, function (err, comparisonData) {
                         if (err) {
@@ -113,7 +120,8 @@
                             alert("Comparison does not exist");
                         } else {
                             viewModel.comparison(new ComparisonViewModel(comparisonData));
-                            viewModel.loading(false);
+
+                            viewModel.loading(viewModel.loading() - 1);
                         }
                     });
                 } else {

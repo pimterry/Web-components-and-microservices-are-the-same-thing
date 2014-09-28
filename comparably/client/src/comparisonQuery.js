@@ -21,6 +21,13 @@ window.comparisonQuery = (function () {
             xhr.open("GET", comparisonServer + "/comparisons/" + comparisonId);
             xhr.send();
         },
+        loadGuestComparisons: function (callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = returnXhrResult(callback);
+
+            xhr.open("GET", comparisonServer + "/comparisons/guest");
+            xhr.send();
+        },
         loadComparisonsForUser: function (user, callback) {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = returnXhrResult(callback);
