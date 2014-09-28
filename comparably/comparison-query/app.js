@@ -24,12 +24,12 @@ app.get('/comparisons', function (req, res) {
 });
 
 // Returns all comparisons owned by a given user
-app.get('/comparisons/user/:id', function (req, res) {
+app.get('/comparisons/user/:userId', function (req, res) {
     var query = "match (u:User)-[:owns]->(c:Comparison)" +
                 "where u.userId = {userId}" +
                 "return c";
 
-    db.query(query, {userId: req.params.id}, function (err, results) {
+    db.query(query, {userId: req.params.userId}, function (err, results) {
         if (err) {
             res.status(500).send(err);
         } else {
