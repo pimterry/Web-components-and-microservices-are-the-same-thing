@@ -42,7 +42,7 @@ app.get('/comparisons/user/:userId', function (req, res) {
 // Returns the full model of a specific comparison
 app.get('/comparisons/:id', function (req, res) {
     var query = "match (c:Comparison) where id(c) = {comparisonId}" +
-                "match (c)-[:includes]->(f:Facet)<-[:described_by]-(i:Item)" +
+                "optional match (c)-[:includes]->(f:Facet)<-[:described_by]-(i:Item)" +
                 "return c, f, i";
     var comparisonId = parseInt(req.params.id);
 
@@ -54,7 +54,10 @@ app.get('/comparisons/:id', function (req, res) {
         } else {
             var comparison = dataWithId(results[0].c);
 
-            var itemMap = results.reduce(function (items, row) {
+            var itemMap = results.filter(function (row) {
+                // Skip rows that didn't optionally match (for comparisons without facets)
+                return row.i && row.f;
+            }).reduce(function (items, row) {
                 var item = dataWithId(row.i);
                 items[item.id] = items[item.id] ||
                                  { id: item.id, name: item.name, facets: [] };
@@ -62,8 +65,6 @@ app.get('/comparisons/:id', function (req, res) {
                 items[item.id].facets.push(dataWithId(row.f));
                 return items;
             }, {});
-
-            console.log(itemMap);
 
             comparison.items = Object.keys(itemMap).map(function (itemId) {
                 return itemMap[itemId];
