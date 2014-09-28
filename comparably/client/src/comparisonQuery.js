@@ -32,7 +32,8 @@ window.comparisonQuery = (function () {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = returnXhrResult(callback);
 
-            xhr.open("GET", comparisonServer + "/comparisons/user/" + user.id());
+            xhr.open("GET", comparisonServer + "/comparisons/user/" + user.id() +
+                                               "?token=" + user.token());
             xhr.send();
         }
     }
