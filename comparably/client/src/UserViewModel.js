@@ -27,6 +27,7 @@ window.UserViewModel = (function () {
 window.GuestUserViewModel = (function () {
     var GuestUserViewModel = function GuestUserViewModel(loadingObservable) {
         this.loading = loadingObservable;
+        this.token = ko.observable("");
         this.comparisons = ko.observableArray();
         this.loadComparisons();
     };

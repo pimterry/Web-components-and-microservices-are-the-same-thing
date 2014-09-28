@@ -76,6 +76,7 @@
     <script src="src/UserViewModel.js"></script>
 
     <script src="src/comparisonQuery.js"></script>
+    <script src="src/comparisonCommand.js"></script>
 
     <script>
         (function () {
@@ -97,7 +98,11 @@
                     unloadComparison();
                 }
             };
+
             viewModel.user(new GuestUserViewModel(viewModel.loading));
+
+            // Yes, yes, globals bad; this is demo-hackery only.
+            window.comparisonCommand = new ComparisonCommand(viewModel.user);
 
             function unloadComparison() {
                 viewModel.comparison(null);
@@ -119,8 +124,9 @@
                         } else if (comparisonData === null) {
                             alert("Comparison does not exist");
                         } else {
-                            viewModel.comparison(new ComparisonViewModel(comparisonData));
+                            var comparison = new ComparisonViewModel(comparisonData);
 
+                            viewModel.comparison(comparison);
                             viewModel.loading(viewModel.loading() - 1);
                         }
                     });
