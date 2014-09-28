@@ -22,8 +22,8 @@ function validateToken(userId, token, callback) {
 
 // Returns all comparisons owned by a given user - requires a ?token= parameter for that user
 app.get('/comparisons/user/:userId', function (req, res) {
-    var query = "match (u:User)-[:owns]->(c:Comparison)" +
-                "where u.userId = {userId}" +
+    var query = "match (u:User)-[:owns]->(c:Comparison) " +
+                "where u.userId = {userId} " +
                 "return c";
 
     var userId = req.params.userId;
@@ -47,8 +47,8 @@ app.get('/comparisons/user/:userId', function (req, res) {
 
 // Returns all comparisons owned by a given user
 app.get('/comparisons/guest', function (req, res) {
-    var query = "match (c:Comparison)" +
-                "where NOT (:User)-[:owns]->(c)" +
+    var query = "match (c:Comparison) " +
+                "where NOT (:User)-[:owns]->(c) " +
                 "return c";
 
     db.query(query, function (err, results) {
@@ -63,8 +63,8 @@ app.get('/comparisons/guest', function (req, res) {
 
 // Returns the full model of a specific comparison
 app.get('/comparisons/:id', function (req, res) {
-    var query = "match (c:Comparison) where id(c) = {comparisonId}" +
-                "optional match (c)-[:includes]->(f:Facet)<-[:described_by]-(i:Item)" +
+    var query = "match (c:Comparison) where id(c) = {comparisonId} " +
+                "optional match (c)-[:includes]->(f:Facet)<-[:described_by]-(i:Item) " +
                 "return c, f, i";
     var comparisonId = parseInt(req.params.id, 10);
 
