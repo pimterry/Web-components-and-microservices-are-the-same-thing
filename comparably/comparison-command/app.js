@@ -52,7 +52,7 @@ app.put('/items/:itemId', function (req, res) {
 
 // Creates a new facet of a comparison describing the given item,
 // with the score/description from the JSON body
-app.post('/comparisons/:comparisonId/items/:itemId', function (req, res) {
+app.post('/comparisons/:comparisonId/items/:itemId/facets', function (req, res) {
     var comparisonId = parseInt(req.params.comparisonId, 10);
     var itemId = parseInt(req.params.itemId, 10);
     var data = req.body;
