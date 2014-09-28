@@ -39,12 +39,50 @@ app.get('/comparisons/user/:userId', function (req, res) {
     });
 });
 
+// Returns the full model of a specific comparison
+app.get('/comparisons/:id', function (req, res) {
+    var query = "match (c:Comparison) where id(c) = {comparisonId}" +
+                "match (c)-[:includes]->(f:Facet)<-[:described_by]-(i:Item)" +
+                "return c, f, i";
+    var comparisonId = parseInt(req.params.id);
+
+    db.query(query, {comparisonId: comparisonId}, function (err, results) {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            var comparison = dataWithId(results[0].c);
+
+            var itemMap = results.reduce(function (items, row) {
+                var item = dataWithId(row.i);
+                items[item.id] = items[item.id] ||
+                                 { id: item.id, name: item.name, facets: [] };
+
+                items[item.id].facets.push(dataWithId(row.f));
+                return items;
+            }, {});
+
+            console.log(itemMap);
+
+            comparison.items = Object.keys(itemMap).map(function (itemId) {
+                return itemMap[itemId];
+            });
+
+            res.json(comparison);
+        }
+    });
+});
+
 function resultToNodeData(key) {
     return function (result) {
-        var nodeData = result[key].data;
-        nodeData.id = result[key].id;
-        return nodeData;
+        return dataWithId(result[key]);
     }
+}
+
+function dataWithId(node) {
+    var result = node.data;
+    result.id = node.id;
+
+    return result;
 }
 
 var port = process.env.PORT || 8086;
