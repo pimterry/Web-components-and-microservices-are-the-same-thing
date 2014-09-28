@@ -1,5 +1,4 @@
 <link rel="import" href="lozenge-banner.html" />
-<link rel="import" href="add-facet.html" />
 
 <template>
     <style>
@@ -32,12 +31,14 @@
 
             pointer-events: none;
         }
+
+        content::content > :last-child {
+            border-bottom: solid #222 3px;
+        }
     </style>
 
     <section>
         <content></content>
-
-        <add-facet></add-facet>
     </section>
 </template>
 

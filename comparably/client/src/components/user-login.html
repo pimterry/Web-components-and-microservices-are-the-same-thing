@@ -57,6 +57,7 @@
                 if (this.status == 200) {
                     var result = JSON.parse(this.responseText);
                     self.setAttribute("username", username);
+                    self.dispatchEvent(new CustomEvent("login", {"detail": result}));
                 } else {
                     alert("Login failed");
                 }
@@ -85,6 +86,7 @@
 
         element.logOut = function () {
             this.removeAttribute("username");
+            this.dispatchEvent(new Event("logout"));
             this.showLoggedOut();
         }
 
