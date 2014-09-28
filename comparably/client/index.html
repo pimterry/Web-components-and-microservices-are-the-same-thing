@@ -24,7 +24,7 @@
         <user-login class="header-right"></user-login>
     </fixed-header>
 
-    <lozenge-list>
+    <lozenge-list style="display: none" data-bind="visible: true">
         <!-- ko foreach: items -->
             <comparison-lozenge data-bind="event: { 'add-facet': addFacet }">
                 <lozenge-banner data-bind="editableText: name"></lozenge-banner>
@@ -47,23 +47,19 @@
     <script src="src/ItemViewModel.js"></script>
     <script src="src/ComparisonViewModel.js"></script>
 
+    <script src="src/comparisonQuery.js"></script>
+
     <script>
         (function () {
-            var initialData = {
-                items: [
-                    { name: "My current phone",
-                    facets: [{description: "Nice big screen"},
-                             {description: "Not bendy"},
-                             {description: "Dodgy camera"}]},
-                    { name: "iPhone 6",
-                    facets: [{description: "Awkward size screen"},
-                             {description: "Bendy"},
-                             {description: "Good camera"}]}
-                ]
-            };
-
-            var data = new ComparisonViewModel(initialData);
-            ko.applyBindings(data, document.querySelector("lozenge-list"));
+            comparisonQuery.loadComparison(8, function (err, comparisonData) {
+                if (err) {
+                    console.error("Error loading comparison data", err);
+                    alert("Error loading comparison data");
+                } else {
+                    var data = new ComparisonViewModel(comparisonData);
+                    ko.applyBindings(data, document.querySelector("lozenge-list"));
+                }
+            });
         })();
     </script>
 </body>
