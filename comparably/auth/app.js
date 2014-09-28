@@ -50,7 +50,7 @@ app.post('/user/:username/create', function (req, res) {
     });
 });
 
-// Logs in as an existing user, returning the 'username' and a valid login 'token'
+// Logs in as an existing user, returning the 'username', 'id', and a valid login 'token'
 app.post('/user/:username/login', function (req, res) {
     var username = req.params.username;
     var password = req.body;
@@ -66,7 +66,7 @@ app.post('/user/:username/login', function (req, res) {
                 if (err) {
                     res.status(500).send(err);
                 }
-                res.json({ username: user.name, token: user.token });
+                res.json({ username: user.name, id: user.id, token: user.token });
             });
         }
     });
