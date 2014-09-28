@@ -13,14 +13,17 @@ window.ComparisonViewModel = (function () {
     ComparisonViewModel.prototype.addItem = function (item) {
         var newItem = new ItemViewModel({ }, this.id);
 
-        comparisonCommand.createItem(newItem.name(), function (err, response) {
-            if (err) {
-                console.error(err);
-                alert("Failed to create item");
-            } else {
-                newItem.id(response.id);
+        comparisonCommand.createItem(
+            { name: newItem.name()},
+            function (err, response) {
+                if (err) {
+                    console.error(err);
+                    alert("Failed to create item");
+                } else {
+                    newItem.id(response.id);
+                }
             }
-        });
+        );
 
         this.items.push(newItem);
     };

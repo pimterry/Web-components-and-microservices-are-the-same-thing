@@ -17,21 +17,21 @@ window.ComparisonCommand = (function () {
 
     return function (user) {
         return {
-            createItem: function (name, callback) {
+            createItem: function (itemData, callback) {
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = returnXhrResult(callback);
 
                 xhr.open("POST", comparisonCommandServer + "/items");
                 xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.send(JSON.stringify({"name": name}));
+                xhr.send(JSON.stringify(itemData));
             },
-            updateItem: function (id, name, callback) {
+            updateItem: function (id, itemData, callback) {
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = returnXhrResult(callback);
 
                 xhr.open("PUT", comparisonCommandServer + "/items/" + id);
                 xhr.setRequestHeader("Content-Type", "application/json");
-                xhr.send(JSON.stringify({"name": name}));
+                xhr.send(JSON.stringify(itemData));
             },
             createFacet: function (comparisonId, itemId, facetData, callback) {
                 var xhr = new XMLHttpRequest();
