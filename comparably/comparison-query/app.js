@@ -9,11 +9,13 @@ app.use(cors());
 
 var db = new neo4j.GraphDatabase({ url: process.env.NEO4J_URL });
 
-// Returns all comparisons in the DB
-app.get('/comparisons', function (req, res) {
-    var query = "match (c:Comparison) return c";
+// Returns all comparisons owned by a given user
+app.get('/comparisons/user/:userId', function (req, res) {
+    var query = "match (u:User)-[:owns]->(c:Comparison)" +
+                "where u.userId = {userId}" +
+                "return c";
 
-    db.query(query, {}, function (err, results) {
+    db.query(query, {userId: req.params.userId}, function (err, results) {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -24,12 +26,12 @@ app.get('/comparisons', function (req, res) {
 });
 
 // Returns all comparisons owned by a given user
-app.get('/comparisons/user/:userId', function (req, res) {
-    var query = "match (u:User)-[:owns]->(c:Comparison)" +
-                "where u.userId = {userId}" +
-                "return c";
+app.get('/comparisons/guest', function (req, res) {
+    var query = "match (c:Comparison)" +
+      "where NOT (:User)-[:owns]->(c)" +
+      "return c";
 
-    db.query(query, {userId: req.params.userId}, function (err, results) {
+    db.query(query, function (err, results) {
         if (err) {
             res.status(500).send(err);
         } else {
