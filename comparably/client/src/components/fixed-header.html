@@ -58,7 +58,7 @@
         var template = thisDocument.querySelector("template");
 
         element.createdCallback = function() {
-            this.createShadowRoot().appendChild(template.content);
+            this.createShadowRoot().appendChild(document.importNode(template.content, true));
         };
 
         document.registerElement('fixed-header', {
