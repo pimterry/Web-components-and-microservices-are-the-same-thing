@@ -49,6 +49,8 @@ app.get('/comparisons/:id', function (req, res) {
     db.query(query, {comparisonId: comparisonId}, function (err, results) {
         if (err) {
             res.status(500).send(err);
+        } else if (results.length === 0) {
+            res.json(null);
         } else {
             var comparison = dataWithId(results[0].c);
 
