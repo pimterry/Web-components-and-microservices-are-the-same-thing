@@ -53,27 +53,29 @@ app.get('/comparisons/:id', function (req, res) {
             res.json(null);
         } else {
             var comparison = dataWithId(results[0].c);
-
-            var itemMap = results.filter(function (row) {
-                // Skip rows that didn't optionally match (for comparisons without facets)
-                return row.i && row.f;
-            }).reduce(function (items, row) {
-                var item = dataWithId(row.i);
-                items[item.id] = items[item.id] ||
-                                 { id: item.id, name: item.name, facets: [] };
-
-                items[item.id].facets.push(dataWithId(row.f));
-                return items;
-            }, {});
-
-            comparison.items = Object.keys(itemMap).map(function (itemId) {
-                return itemMap[itemId];
-            });
-
+            comparison.items = comparisonResultsToItemList(results);
             res.json(comparison);
         }
     });
 });
+
+function comparisonResultsToItemList(results) {
+    var itemMap = results.filter(function (row) {
+        // Skip rows that didn't optionally match (for comparisons without facets)
+        return row.i && row.f;
+    }).reduce(function (items, row) {
+        var item = dataWithId(row.i);
+        items[item.id] = items[item.id] ||
+        { id: item.id, name: item.name, facets: [] };
+
+        items[item.id].facets.push(dataWithId(row.f));
+        return items;
+    }, {});
+
+    return Object.keys(itemMap).map(function (itemId) {
+        return itemMap[itemId];
+    });
+}
 
 function resultToNodeData(key) {
     return function (result) {
