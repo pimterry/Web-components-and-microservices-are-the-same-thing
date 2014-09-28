@@ -21,6 +21,8 @@
 
     <link rel="import" href="src/components/item-facet.html" />
     <link rel="import" href="src/components/add-facet.html" />
+
+    <link rel="import" href="src/components/loading-spinner.html" />
 </head>
 <body>
     <fixed-header>
@@ -31,30 +33,35 @@
     </fixed-header>
 
     <lozenge-list style="display: none" data-bind="visible: true">
-        <!-- ko with: $data.comparison -->
-            <!-- ko foreach: items -->
-                <comparison-lozenge>
-                    <lozenge-banner data-bind="editableText: name"></lozenge-banner>
-                    <!-- ko foreach: facets -->
-                        <item-facet data-bind="twoWayAttr: { score: score },
-                                               editableText: description">
-                        </item-facet>
-                    <!-- /ko -->
+        <!-- ko if: loading() -->
+        <loading-spinner></loading-spinner>
+        <!-- /ko -->
+        <!-- ko if: !loading() -->
+            <!-- ko with: $data.comparison -->
+                <!-- ko foreach: items -->
+                    <comparison-lozenge>
+                        <lozenge-banner data-bind="editableText: name"></lozenge-banner>
+                        <!-- ko foreach: facets -->
+                            <item-facet data-bind="twoWayAttr: { score: score },
+                                                   editableText: description">
+                            </item-facet>
+                        <!-- /ko -->
 
-                    <add-facet data-bind="event: { 'add-facet': addFacet }"></add-facet>
-                </comparison-lozenge>
+                        <add-facet data-bind="event: { 'add-facet': addFacet }"></add-facet>
+                    </comparison-lozenge>
+                <!-- /ko -->
+
+                <add-lozenge data-bind="event: { 'add-item': addItem }"></add-lozenge>
             <!-- /ko -->
 
-            <add-lozenge data-bind="event: { 'add-item': addItem }"></add-lozenge>
-        <!-- /ko -->
-
-        <!-- ko with: !$data.comparison() && $data.user() -->
-            <comparison-lozenge>
-                <lozenge-banner>Comparisons</lozenge-banner>
-                <!-- ko foreach: comparisons() -->
-                    <item-facet data-bind="text: name, click: $root.loadComparison"></item-facet>
-                <!-- /ko -->
-            </comparison-lozenge>
+            <!-- ko with: !$data.comparison() && $data.user() -->
+                <comparison-lozenge>
+                    <lozenge-banner>Comparisons</lozenge-banner>
+                    <!-- ko foreach: comparisons() -->
+                        <item-facet data-bind="text: name, click: $root.loadComparison"></item-facet>
+                    <!-- /ko -->
+                </comparison-lozenge>
+            <!-- /ko -->
         <!-- /ko -->
     </lozenge-list>
 
@@ -74,6 +81,7 @@
     <script>
         (function () {
             var viewModel = {
+                loading: ko.observable(false),
                 comparison: ko.observable(),
                 user: ko.observable(new GuestUserViewModel()),
 
@@ -91,21 +99,13 @@
 
             ko.applyBindings(viewModel, document.querySelector("body"));
 
-            function loadUserComparisons(userId) {
-                comparisonQuery.loadUserComparisons(userId, function (err, comparisons) {
-                    if (err) {
-                        alert(err);
-                    } else {
-                        viewModel.myComparisons(comparisons);
-                    }
-                });
-            }
-
             function onHashChange() {
                 var hash = window.location.hash.substring(1);
                 var comparisonId = parseInt(hash, 10);
 
                 if (comparisonId) {
+                    viewModel.loading(true);
+
                     comparisonQuery.loadComparison(comparisonId, function (err, comparisonData) {
                         if (err) {
                             alert("Error loading comparison data");
@@ -113,6 +113,7 @@
                             alert("Comparison does not exist");
                         } else {
                             viewModel.comparison(new ComparisonViewModel(comparisonData));
+                            viewModel.loading(false);
                         }
                     });
                 } else {
