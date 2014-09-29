@@ -17,10 +17,17 @@ h1, h2, h3, h4, h5, h6, p {
 
 .bespoke-parent {
   -webkit-transform: translate3d(0, 0, 0);
+  
+  transition: 0.5s background-color ease;
+  -webkit-transition: 0.5s background-color ease;
 }
 
 .bespoke-slide {
   background-color: rgba(255, 255, 255, 0);
+  
+  transition: none;
+  -webkit-transition: none;
+
   padding: 20px;
 
   aside {
@@ -140,6 +147,17 @@ pre {
 
 .lowlight {
   opacity: 0.6;
+}
+
+.title {
+  background: url('/images/title-background.jpg');
+  background-size: cover;
+  background-position: center;
+
+  h1 {
+    width: 100vw;
+    background-color: rgba(255,255,255,0.95)
+  }
 }
 
 .topic-slide {
