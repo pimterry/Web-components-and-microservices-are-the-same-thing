@@ -128,9 +128,7 @@ html
 
       section
         h2 Shadow DOM
-        | <div id="myDiv2">
-        |    Real content
-        | </div>
+        | <div id="myDiv2">Real content</div>
         | <script>
         | var div = document.querySelector("#myDiv2");
         | var shadow = div.createShadowRoot();
@@ -138,17 +136,13 @@ html
         | </script>
         pre
           code.language-markup.
-            &lt;div id="myDiv2"&gt;
-              Real content
-            &lt;/div&gt;
+            &lt;div id="myDiv2"&gt;Real content&lt;/div&gt;
 
             &lt;script type="text/javascript"&gt;
               var div = document.querySelector("#myDiv2")
               var shadow = div.createShadowRoot();
-              shadow.innerHTML =
-              "&lt;i&gt;" +
-                "Originally: &lt;content&gt;&lt;/content&gt;" +
-              "&lt;/i&gt;";
+
+              shadow.innerHTML = "&lt;i&gt;Originally: &lt;content&gt;&lt;/content&gt;&lt;/i&gt;";
             &lt;/script&gt;
 
       section
