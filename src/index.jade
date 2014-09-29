@@ -24,6 +24,94 @@ html
       section
         h2 Web Components
 
+        | <template id="navbar">
+        |  <style>@import 'http://getbootstrap.com/dist/css/bootstrap.min.css';</style>
+        |  <div class="bs-example bs-navbar-top-example">
+        |    <nav class="navbar navbar-default navbar-inverse" role="navigation">
+        |      <div class="container-fluid">
+        |        <div class="navbar-header">
+        |          <button type="button" class="navbar-toggle collapsed"
+        |                  data-toggle="collapse"
+        |                  data-target="#bs-example-navbar-collapse-6">
+        |            <span class="sr-only">Toggle navigation</span>
+        |            <span class="icon-bar"></span>
+        |            <span class="icon-bar"></span>
+        |            <span class="icon-bar"></span>
+        |          </button>
+        |          <a class="navbar-brand" href="#">Brand</a>
+        |        </div>
+        |        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+        |          <ul class="nav navbar-nav">
+        |            <li class="active"><a href="#">Home</a></li>
+        |            <li><a href="#">Link</a></li>
+        |            <li><a href="#">Link</a></li>
+        |          </ul>
+        |        </div>
+        |      </div>
+        |    </nav>
+        |  </div>
+        | </template>
+        | <div class="navbar-target" style="width: 100%"></div>
+        | <script defer async>
+        |  window.setTimeout(function () {
+        |   var template = document.querySelector("template#navbar");
+        |   var target = document.querySelectorAll(".navbar-target");
+        |   [].forEach.call(target, function(t) {
+        |     var shadow = t.createShadowRoot();
+        |     shadow.appendChild(document.importNode(template.content, true));
+        |   });
+        |  }, 0);
+        | </script>
+
+      section
+        h2 Web Components
+
+        | <div class="navbar-target" style="width: 100%"></div>
+
+        pre(style='height: 70%; overflow-x: hidden')
+          code.language-markup.
+            &lt;div class="bs-example bs-navbar-top-example"&gt;
+              &lt;nav class="navbar navbar-default navbar-inverse" role="navigation"&gt;
+                &lt;div class="container-fluid"&gt;
+                  &lt;div class="navbar-header"&gt;
+                    &lt;button type="button" class="navbar-toggle collapsed"
+                            data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-6"&gt;
+                      &lt;span class="sr-only"&gt;Toggle navigation&lt;/span&gt;
+                      &lt;span class="icon-bar"&gt;&lt;/span&gt;
+                      &lt;span class="icon-bar"&gt;&lt;/span&gt;
+                      &lt;span class="icon-bar"&gt;&lt;/span&gt;
+                    &lt;/button&gt;
+                    &lt;a class="navbar-brand" href="/"&gt;Brand&lt;/a&gt;
+                  &lt;/div&gt;
+
+                  &lt;div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"&gt;
+                    &lt;ul class="nav navbar-nav"&gt;
+                      &lt;li class="active"&gt;&lt;a href="/1"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                      &lt;li&gt;&lt;a href="/2"&gt;Link&lt;/a&gt;&lt;/li&gt;
+                      &lt;li&gt;&lt;a href="/3"&gt;Link&lt;/a&gt;&lt;/li&gt;
+                    &lt;/ul&gt;
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/nav&gt;
+            &lt;/div&gt;
+            
+      section
+        h2 Web Components
+        | <div class="navbar-target" style="width: 60%"></div>
+        pre(style="min-width:0")
+          code.language-markup.
+            &lt;nav-bar&gt;              
+              &lt;a href="/"&gt;Brand&lt;/a&gt;
+              &lt;ul&gt;
+                &lt;li&gt;&lt;a href="/1"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/2"&gt;Link&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/3"&gt;Link&lt;/a&gt;&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/nav-bar&gt;        
+
+      section
+        h2 Web Components
         h3
           ul
             li
@@ -144,94 +232,6 @@ html
 
               shadow.innerHTML = "&lt;i&gt;Originally: &lt;content&gt;&lt;/content&gt;&lt;/i&gt;";
             &lt;/script&gt;
-
-      section
-        h2 Custom Elements
-
-        | <template id="navbar">
-        |  <style>@import 'http://getbootstrap.com/dist/css/bootstrap.min.css';</style>
-        |  <div class="bs-example bs-navbar-top-example">
-        |    <nav class="navbar navbar-default navbar-inverse" role="navigation">
-        |      <div class="container-fluid">
-        |        <div class="navbar-header">
-        |          <button type="button" class="navbar-toggle collapsed"
-        |                  data-toggle="collapse"
-        |                  data-target="#bs-example-navbar-collapse-6">
-        |            <span class="sr-only">Toggle navigation</span>
-        |            <span class="icon-bar"></span>
-        |            <span class="icon-bar"></span>
-        |            <span class="icon-bar"></span>
-        |          </button>
-        |          <a class="navbar-brand" href="#">Brand</a>
-        |        </div>
-        |        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
-        |          <ul class="nav navbar-nav">
-        |            <li class="active"><a href="#">Home</a></li>
-        |            <li><a href="#">Link</a></li>
-        |            <li><a href="#">Link</a></li>
-        |          </ul>
-        |        </div>
-        |      </div>
-        |    </nav>
-        |  </div>
-        | </template>
-        | <div class="navbar-target" style="width: 100%"></div>
-        | <script defer async>
-        |  window.setTimeout(function () {
-        |   var template = document.querySelector("template#navbar");
-        |   var target = document.querySelectorAll(".navbar-target");
-        |   [].forEach.call(target, function(t) {
-        |     var shadow = t.createShadowRoot();
-        |     shadow.appendChild(document.importNode(template.content, true));
-        |   });
-        |  }, 0);
-        | </script>
-
-      section
-        h2 Custom Elements
-
-        | <div class="navbar-target" style="width: 100%"></div>
-
-        pre(style='height: 70%; overflow-x: hidden')
-          code.language-markup.
-            &lt;div class="bs-example bs-navbar-top-example"&gt;
-              &lt;nav class="navbar navbar-default navbar-inverse" role="navigation"&gt;
-                &lt;div class="container-fluid"&gt;
-                  &lt;div class="navbar-header"&gt;
-                    &lt;button type="button" class="navbar-toggle collapsed"
-                            data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-6"&gt;
-                      &lt;span class="sr-only"&gt;Toggle navigation&lt;/span&gt;
-                      &lt;span class="icon-bar"&gt;&lt;/span&gt;
-                      &lt;span class="icon-bar"&gt;&lt;/span&gt;
-                      &lt;span class="icon-bar"&gt;&lt;/span&gt;
-                    &lt;/button&gt;
-                    &lt;a class="navbar-brand" href="#"&gt;Brand&lt;/a&gt;
-                  &lt;/div&gt;
-
-                  &lt;div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"&gt;
-                    &lt;ul class="nav navbar-nav"&gt;
-                      &lt;li class="active"&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
-                      &lt;li&gt;&lt;a href="#"&gt;Link&lt;/a&gt;&lt;/li&gt;
-                      &lt;li&gt;&lt;a href="#"&gt;Link&lt;/a&gt;&lt;/li&gt;
-                    &lt;/ul&gt;
-                  &lt;/div&gt;
-                &lt;/div&gt;
-              &lt;/nav&gt;
-            &lt;/div&gt;
-            
-      section
-        h2 Custom Elements
-        | <div class="navbar-target" style="width: 60%"></div>
-        pre
-          code.language-markup.
-            &lt;nav-bar&gt;
-              &lt;ul&gt;
-                &lt;li&gt;Home&lt;/li&gt;
-                &lt;li&gt;Link&lt;/li&gt;
-                &lt;li&gt;Link&lt;/li&gt;
-              &lt;/ul&gt;
-            &lt;/nav-bar&gt;
 
       section
         h2 Custom Elements
