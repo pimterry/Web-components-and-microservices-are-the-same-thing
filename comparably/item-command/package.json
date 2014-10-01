@@ -1,6 +1,6 @@
 {
-  "name": "comparably-comparison-query",
-  "description": "Comparably Comparison Query Microservice",
+  "name": "comparably-item-command",
+  "description": "Comparably Item Command Microservice",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
