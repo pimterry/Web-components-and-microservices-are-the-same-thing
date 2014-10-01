@@ -1,5 +1,6 @@
 window.ComparisonCommand = (function () {
-    var comparisonCommandServer = "http://comparably-comparison-command.herokuapp.com";
+    var itemCommandServer = "http://comparably-item-command.herokuapp.com";
+    var facetCommandServer = "http://comparably-facet-command.herokuapp.com";
 
     function returnXhrResult(callback) {
         return function () {
@@ -21,7 +22,7 @@ window.ComparisonCommand = (function () {
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = returnXhrResult(callback);
 
-                xhr.open("POST", comparisonCommandServer + "/items");
+                xhr.open("POST", itemCommandServer + "/items");
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.send(JSON.stringify(itemData));
             },
@@ -29,7 +30,7 @@ window.ComparisonCommand = (function () {
                 var xhr = new XMLHttpRequest();
                 xhr.onreadystatechange = returnXhrResult(callback);
 
-                xhr.open("PUT", comparisonCommandServer + "/items/" + id);
+                xhr.open("PUT", itemCommandServer + "/items/" + id);
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.send(JSON.stringify(itemData));
             },
@@ -40,7 +41,7 @@ window.ComparisonCommand = (function () {
                 var path = "/comparisons/" + comparisonId + "/items/" + itemId + "/facets" +
                            "?token=" + user().token();
 
-                xhr.open("POST", comparisonCommandServer + path);
+                xhr.open("POST", facetCommandServer + path);
 
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.send(JSON.stringify(facetData));
@@ -51,7 +52,7 @@ window.ComparisonCommand = (function () {
 
                 var path = "/comparisons/" + comparisonId + "/facets/" + facetId +
                            "?token=" + user().token();
-                xhr.open("PUT", comparisonCommandServer + path);
+                xhr.open("PUT", facetCommandServer + path);
 
                 xhr.setRequestHeader("Content-Type", "application/json");
                 xhr.send(JSON.stringify(facetData));
