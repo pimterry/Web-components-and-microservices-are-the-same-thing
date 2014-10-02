@@ -18,6 +18,28 @@ function generateToken() {
     return uuid.v4();
 }
 
+// Logs in as an existing user, returning the 'username', 'id', and a valid login 'token'
+app.post('/user/:username/login', function (req, res) {
+    var username = req.params.username;
+    var password = req.body;
+
+    User.findOne({name: username, password: password}, function (err, user) {
+        if (err) {
+            res.status(500).send(err);
+        } else if (!user) {
+            res.status(401).end();
+        } else {
+            user.token = generateToken();
+            user.save(function (err) {
+                if (err) {
+                    res.status(500).send(err);
+                }
+                res.json({ username: user.name, id: user.id, token: user.token });
+            });
+        }
+    });
+});
+
 // Takes a token, returns with 'valid' bool, and the matching user 'id' (if valid)
 app.get('/validate/token/:token', function (req, res) {
     var token = req.params.token;
@@ -50,27 +72,6 @@ app.post('/user/:username/create', function (req, res) {
     });
 });
 
-// Logs in as an existing user, returning the 'username', 'id', and a valid login 'token'
-app.post('/user/:username/login', function (req, res) {
-    var username = req.params.username;
-    var password = req.body;
-
-    User.findOne({name: username, password: password}, function (err, user) {
-        if (err) {
-            res.status(500).send(err);
-        } else if (!user) {
-            res.status(401).end();
-        } else {
-            user.token = generateToken();
-            user.save(function (err) {
-                if (err) {
-                    res.status(500).send(err);
-                }
-                res.json({ username: user.name, id: user.id, token: user.token });
-            });
-        }
-    });
-});
 
 var port = process.env.PORT || 8085;
 
