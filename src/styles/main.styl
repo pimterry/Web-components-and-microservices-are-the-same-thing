@@ -60,14 +60,14 @@ ul {
 
 address {
   font-family: 'Patua One', serif;
-  margin: 20px auto 0 auto;
+  margin: 0 auto;
   text-align: right;
   width: 600px;
   font-style: normal;
   line-height: 150%
 
   .bio {
-    opacity: 0.7;
+    color: #777;
   }
   
   .author {
@@ -76,6 +76,14 @@ address {
 
   .author, a {
     font-weight: bolder;
+  }
+
+  .org {
+    color: #6ea0b0;
+
+    .i {
+      color: #00548e;
+    }
   }
 
   a {
@@ -140,7 +148,7 @@ pre {
   opacity: 0.6;
 }
 
-.title {
+.title, .finish {
   background: url('/images/title-background.jpg');
   background-size: cover;
   background-position: center;
@@ -154,6 +162,11 @@ pre {
       line-height: 100%;
     }
   }
+}
+
+.finish h1 {
+  padding: 50px;
+  margin-bottom: 0;
 }
 
 .topic-slide {
