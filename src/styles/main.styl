@@ -42,12 +42,6 @@ h1, h2, h3, h4, h5, h6, p {
   font-weight: bolder;
 }
 
-.title {
-  text-align: left;
-  font-weight: normal;
-  font-family: 'Patua One', serif;
-}
-
 h2.full-slide {
   font-size: 90pt;
   font-weight: normal;
@@ -65,10 +59,10 @@ ul {
 }
 
 address {
-  margin-top: 20px;
-  float: left;
+  font-family: 'Patua One', serif;
+  margin: 20px auto 0 auto;
   text-align: right;
-  width: 100%;
+  width: 600px;
   font-style: normal;
   line-height: 150%
 
@@ -91,13 +85,10 @@ address {
     }
   }
 
-  .urls {
-    padding-top: 26px;
-  }
-
   ul {
-    width: 100%;
+    width: 600px;
     position: relative;
+    margin: 0;
 
     list-style: none;
 
@@ -154,9 +145,14 @@ pre {
   background-size: cover;
   background-position: center;
 
-  h1 {
+  .bespoke-active > div {
     width: 100vw;
-    background-color: rgba(255,255,255,0.95)
+    background-color: rgba(255,255,255,0.90)
+    text-align: center;
+
+    h1 {
+      line-height: 100%;
+    }
   }
 }
 
