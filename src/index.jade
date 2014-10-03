@@ -258,7 +258,7 @@ html
 
         pre
           code.language-markup.
-            &lt;nav-bar inverted&gt;
+            &lt;nav-bar&gt;
               &lt;ul&gt;
                 &lt;li&gt;Home&lt;/li&gt;
                 &lt;li&gt;Link&lt;/li&gt;
@@ -292,22 +292,6 @@ html
             NavBarPrototype.attachedCallback = function () { ... }
             NavBarPrototype.detachedCallback = function () { ... }
             NavBarPrototype.attributeChangedCallback = function () { ... }
-
-            document.registerElement('nav-bar', {
-                prototype: NavBarPrototype
-            });
-
-      section
-        h2 Custom Elements
-        pre
-          code.language-javascript.
-            var NavBarPrototype = Object.create(HTMLElement.prototype);
-
-            NavBarPrototype.createdCallback = function () {              
-              this.innerHTML = '&lt;div class="bs-example bs-navbar-top-example"&gt; \
-                                   &lt;nav class="navbar navbar-default navbar inverse"> \
-                                   ...';
-            };
 
             document.registerElement('nav-bar', {
                 prototype: NavBarPrototype
