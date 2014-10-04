@@ -409,6 +409,7 @@ html
           ul
             li Architectural pattern
             li Focused around building your architecture as small standalone processes
+            li Netflix and Spotify
             li Best understood in comparison to...
 
       section
@@ -493,18 +494,13 @@ html
         aside
           ul
             li Note link to source
-            li Auth, as seen
-            li Once authed, can load a list of comparisons for a user
-            li Can load an individual comparison, by click or link, here simple but GUID in real life
-            li Can add & update items or facets
-            li Notably not all authed, listing & changing a comparison (the facets) needs permissions
-            li Comparisons are public if you go directly
-            li As is adding items, since that's actually not tied to a single comp
-            li Explain list of services
-            li Show auth
-            li Talk about size of auth
-            li Show facet
-            li Talk about structure of facet
+            li Auth is one service
+            li Once authed, can load a list of comparisons for a user with a token
+            li Service for that validates with auth server in the background
+            li Can load individual comparison
+            li Can add & update facets
+            li Can also add or update items
+            li We'll take a look at the code in a moment, first a diagram
 
       section
         img(src='images/comparably-microservices.png', style="width:600px")
@@ -517,7 +513,11 @@ html
             li UI calls command query and auth services, could be facade as this expands
             li All of command and query use Neo, auth uses Mongo
             li Some of C/Q talk to auth service, not all
-            li Perhaps clearer if...
+            li Let's look at the code
+            li
+            li 6 services
+            li Auth - cohesive, easy to tell what's happening, easy to see what it exposes and what it doesn't
+            li Facet command - similarly
 
       section
         h2 These are not technically the same thing
@@ -580,7 +580,8 @@ html
             li External interface is understood by everything, rewrites are cheap
             li
             li Web components and microservices and more share these underlying concepts
-            li All gives you more and more power to evolve designs with max flexibility, minimizing up-front work
+            li All gives you more and more power to develop designs with max flexibility, minimizing up-front work
+            li And independently confidently evolving your structure and implementation details as you build
 
 
       section(data-bespoke-state="finish")
