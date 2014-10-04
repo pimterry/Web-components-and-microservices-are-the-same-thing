@@ -291,7 +291,21 @@ html
             });
 
       section
-        h2 Custom Elements
+        h2 Nav-Bar Web Component
+        | <div class="navbar-target" style="width: 60%"></div>
+        pre(style="min-width:0")
+          code.language-markup.
+            &lt;nav-bar&gt;
+              &lt;a href="/"&gt;Brand&lt;/a&gt;
+              &lt;ul&gt;
+                &lt;li&gt;&lt;a href="/1"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/2"&gt;Link&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/3"&gt;Link&lt;/a&gt;&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/nav-bar&gt;
+
+      section
+        h2 Nav-Bar Web Component
         pre(style='font-size:53%; padding: 15px 16px !important')
           code.language-javascript.
             &lt;template id="navBarTemplate"&gt;
@@ -565,23 +579,21 @@ html
             li Iteratively evolve your implementation
         aside
           ul
-            li This gives you modifiability, a term I'm stealing from Martin Fowler
+            li Modifiability - a term I'm stealing from Martin Fowler
             li A fundamental part of evolutionary design, the ability to effectively iterate on app structure
+            li Encapsulation by default and interactions over common medium don't give you this for free, but help
             li
-            li Structure of your application better represents the features of your application, language of your domain
-            li Useful, because high-level designs changes much less frequently that low-level implementation
-            li Rarely change the fact that you can login to the site
-            li Much more likely to change how you login, add 2FA, simplify sign-up process
-            li That's exactly what both these designs provide
-            li Both structure and implementation can be independently changeable
+            li Structure of your application better represents the features of your application
+            li language of your domain, design of your UI - makes it easy to understand & change high-level
+            li Encapsulation also makes implementation changable, independently
             li
             li You can use the best tools; components written in React or vanilla.js can interact
             li Rewrite your legacy webservices in Node, or move your algorithmic work to Haskell
             li External interface is understood by everything, rewrites are cheap
             li
-            li Web components and microservices and more share these underlying concepts
-            li All gives you more and more power to develop designs with max flexibility, minimizing up-front work
-            li And independently confidently evolving your structure and implementation details as you build
+            li Finally, web components and microservices and more sharing these underlying concepts
+            li All together gives you more and more power to develop designs with max flexibility, minimizing up-front work
+            li And confidently <strong>independently</strong> evolve your structure and implementation details, as you build
 
 
       section(data-bespoke-state="finish")
