@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>What the hell are Web Components</title>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Patua+One" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="build/build.css">
+  </head>
+  <body>
+    <article>
+      <section data-bespoke-state="title">
+        <div>
+          <h1>Web Components<br>===<br>Microservices</h1>
+          <address class="vcard">
+            <div class="author fn">Tim Perry</div>
+            <div class="note bio"><span>Tech Lead &amp; Open-Source Champion at&nbsp;</span><span class="org vcard"><a href="http://softwire.com" rel="group" class="org fn url">Softw<span class="i">i</span>re</a></span></div>
+            <ul class="urls">
+              <li><a href="http://tim-perry.co.uk" rel="me" class="url">tim-perry.co.uk</a></li>
+              <li><a href="http://github.com/pimterry" rel="me" class="url">github.com/pimterry</a></li>
+              <li><a href="http://twitter.com/pimterry" rel="me" class="nickname url">@pimterry</a></li>
+            </ul>
+          </address>
+        </div>
+        <aside>
+          <ul>
+            <li>Good afternoon</li>
+            <li>Tim Perry, I work at Softwire</li>
+            <li>Talking about web components & microservices</li>
+            <li>High-speed intro covering a lot of ground, not a how to</li>
+            <li>Some examples of these in action</li>
+            <li>And I want to talk about how these are related, and how that's useful more generally</li>
+          </ul>
+        </aside>
+      </section>
+      <section><img src="/images/softwireLogo.png" alt="Softwire" class="logo-big"></section>
+      <section>
+        <h2>Web Components</h2><template id="navbar">
+         <style>@import 'http://getbootstrap.com/dist/css/bootstrap.min.css';</style>
+         <div class="bs-example bs-navbar-top-example">
+           <nav class="navbar navbar-default navbar-inverse" role="navigation">
+             <div class="container-fluid">
+               <div class="navbar-header">
+                 <button type="button" class="navbar-toggle collapsed"
+                         data-toggle="collapse"
+                         data-target="#bs-example-navbar-collapse-6">
+                   <span class="sr-only">Toggle navigation</span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                   <span class="icon-bar"></span>
+                 </button>
+                 <a class="navbar-brand" href="#">Brand</a>
+               </div>
+               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+                 <ul class="nav navbar-nav">
+                   <li class="active"><a href="#">Home</a></li>
+                   <li><a href="#">Link</a></li>
+                   <li><a href="#">Link</a></li>
+                 </ul>
+               </div>
+             </div>
+           </nav>
+         </div>
+        </template>
+        <div class="navbar-target" style="width: 100%"></div>
+        <script defer async>
+         window.setTimeout(function () {
+          var template = document.querySelector("template#navbar");
+          var target = document.querySelectorAll(".navbar-target");
+          [].forEach.call(target, function(t) {
+            var shadow = t.createShadowRoot();
+            shadow.appendChild(document.importNode(template.content, true));
+          });
+         }, 0);
+        </script>
+      </section>
+      <section>
+        <h2>Web Components</h2><div class="navbar-target" style="width: 100%"></div>
+        <pre style="height: 70%; overflow-x: hidden"><code class="language-markup">&lt;div class="bs-example bs-navbar-top-example"&gt;
+  &lt;nav class="navbar navbar-default navbar-inverse" role="navigation"&gt;
+    &lt;div class="container-fluid"&gt;
+      &lt;div class="navbar-header"&gt;
+        &lt;button type="button" class="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-6"&gt;
+        &lt;span class="sr-only"&gt;Toggle navigation&lt;/span&gt;
+          &lt;span class="icon-bar"&gt;&lt;/span&gt;
+          &lt;span class="icon-bar"&gt;&lt;/span&gt;
+          &lt;span class="icon-bar"&gt;&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;a class="navbar-brand" href="/"&gt;Brand&lt;/a&gt;
+      &lt;/div&gt;
+      
+      &lt;div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6"&gt;
+        &lt;ul class="nav navbar-nav"&gt;
+          &lt;li class="active"&gt;&lt;a href="/1"&gt;Home&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="/2"&gt;Link&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="/3"&gt;Link&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/nav&gt;
+&lt;/div&gt;
+</code></pre>
+      </section>
+      <section>
+        <h2>Web Components</h2><div class="navbar-target" style="width: 60%"></div>
+        <pre style="min-width:0"><code class="language-markup">&lt;nav-bar&gt;              
+  &lt;a href="/"&gt;Brand&lt;/a&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="/1"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/2"&gt;Link&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/3"&gt;Link&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav-bar&gt;
+</code></pre>
+      </section>
+      <section>
+        <h2>Web Components</h2>
+        <h3>
+          <ul class="bullet">
+            <li></li>
+            <li>&lt;Template&gt;</li>
+            <li>HTML Imports</li>
+            <li>Shadow DOM</li>
+            <li>Custom Elements</li>
+          </ul>
+        </h3>
+        <aside>
+          <ul>
+            <li>This is a set of 4 new w3c specs</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2>&lt;Template&gt;</h2>
+        <pre><code class="language-markup">&lt;template id="template1"&gt;
+  &lt;img src="/default-image.png" /&gt;
+  &lt;h3&gt;Cool image!&lt;/h3&gt;
+&lt;/template&gt;
+</code></pre>
+      </section>
+      <section>
+        <h2>&lt;Template&gt;</h2>
+        <pre><code class="language-markup">&lt;template id="template1"&gt;
+  &lt;img src="/default-image.png" /&gt;
+  &lt;h3&gt;Cool image!&lt;/h3&gt;
+&lt;/template&gt;
+
+&lt;script type="text/javascript"&gt;
+    var template = document.querySelector("#template1");
+    var content = document.importNode(template.content, true);
+    document.body.appendNode(content);
+&lt;/script&gt;
+</code></pre>
+      </section>
+      <section>
+        <h2>HTML Imports</h2>
+        <div class="sideBySide">
+          <div>
+            <h3>index.html</h3>
+            <pre><code class="language-markup">&lt;head&gt;
+  &lt;link rel="import"
+        href="import.html" /&gt;
+&lt;/head&gt;</code></pre>
+          </div>
+          <div>
+            <h3>import.html</h3>
+            <pre><code class="language-markup">Some HTML!
+
+&lt;style&gt;
+  h1 { font-size: 500%; }
+&lt;/style&gt;
+
+&lt;script&gt;
+window.aThing = function () {
+  ...
+}
+&lt;/script&gt;
+</code></pre>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2>Shadow DOM</h2><video src="http://bit.ly/1wMMbE6" controls muted></video>
+      </section>
+      <section>
+        <h2>Shadow DOM</h2>
+        <div id="myDiv">Some irrelevant content</div>
+        <script type="text/javascript">
+           var div = document.querySelector("#myDiv")
+           var shadow = div.createShadowRoot();
+           shadow.innerHTML = '<h3>Dom-invisible headline!</h3>';
+        </script>
+        <pre><code class="language-markup">&lt;div id="myDiv"&gt;Some irrelevant content&lt;div&gt;
+
+&lt;script type="text/javascript"&gt;
+  var div = document.querySelector("#myDiv")
+  var shadow = div.createShadowRoot();
+  
+  shadow.innerHTML = '&lt;h3&gt;Dom-invisible headline!&lt;/h3&gt;';
+&lt;/script&gt;
+</code></pre>
+      </section>
+      <section>
+        <h2>Shadow DOM</h2><div id="myDiv2">Real content</div>
+        <script>
+        var div = document.querySelector("#myDiv2");
+        var shadow = div.createShadowRoot();
+        shadow.innerHTML = "<i>Originally: <content></content></i>";
+        </script>
+        <pre><code class="language-markup">&lt;div id="myDiv2"&gt;Real content&lt;/div&gt;
+
+&lt;script type="text/javascript"&gt;
+  var div = document.querySelector("#myDiv2")
+  var shadow = div.createShadowRoot();
+  
+  shadow.innerHTML = "&lt;i&gt;Originally: &lt;content&gt;&lt;/content&gt;&lt;/i&gt;";
+&lt;/script&gt;
+</code></pre>
+      </section>
+      <section>
+        <h2>Custom Elements</h2>
+        <pre><code class="language-javascript">document.registerElement('nav-bar');
+</code></pre>
+        <pre><code class="language-markup">&lt;nav-bar&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Home&lt;/li&gt;
+    &lt;li&gt;Link&lt;/li&gt;
+    &lt;li&gt;Link&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav-bar&gt;
+</code></pre>
+      </section>
+      <section>
+        <h2>Custom Elements</h2>
+        <pre><code class="language-javascript">var NavBarPrototype = Object.create(HTMLElement.prototype);
+
+NavBarPrototype.updateContent = function () { ... }
+
+document.registerElement("nav-bar", {
+    prototype: NavBarPrototype
+});
+
+...
+
+document.querySelector("nav-bar").updateContent();
+</code></pre>
+      </section>
+      <section>
+        <h2>Custom Elements</h2>
+        <pre><code class="language-javascript">var NavBarPrototype = Object.create(HTMLElement.prototype);
+
+NavBarPrototype.createdCallback = function () { ... }
+NavBarPrototype.attachedCallback = function () { ... }
+NavBarPrototype.detachedCallback = function () { ... }
+NavBarPrototype.attributeChangedCallback = function () { ... }
+
+document.registerElement('nav-bar', {
+    prototype: NavBarPrototype
+});
+</code></pre>
+      </section>
+      <section>
+        <h2>Nav-Bar Web Component</h2><div class="navbar-target" style="width: 60%"></div>
+        <pre style="min-width:0"><code class="language-markup">&lt;nav-bar&gt;
+  &lt;a href="/"&gt;Brand&lt;/a&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="/1"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/2"&gt;Link&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/3"&gt;Link&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav-bar&gt;
+</code></pre>
+      </section>
+      <section>
+        <h2>Nav-Bar Web Component</h2>
+        <pre style="font-size:53%; padding: 15px 16px !important"><code class="language-javascript">&lt;template id="navBarTemplate"&gt;
+  &lt;div class="bs-example bs-navbar-top-example"&gt;
+    &lt;nav class="navbar navbar-default navbar inverse"&gt;
+      ...
+      &lt;content&gt;&lt;/content&gt;
+      ...
+    &lt/nav&gt;
+  &lt/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+  var NavBarPrototype = Object.create(HTMLElement.prototype);
+  
+  NavBarPrototype.createdCallback = function () {
+    var template = document.querySelector("#navBarTemplate");
+    var content = document.importNode(template.content, true);
+    this.createShadowRoot().appendNode(content);
+  };
+  
+  document.registerElement('nav-bar', {
+      prototype: NavBarPrototype
+  });           
+&lt;/script&gt; 
+</code></pre>
+      </section>
+      <section>
+        <h2 class="full-slide">Let's see it in action</h2>
+        <h4><a href="http://bit.ly/web-components-example">Source at bit.ly/web-components-example</a></h4>
+        <aside>
+          <ul>
+            <li>Site - Compare things, header, items, names, facets</li>
+            <li>Tech - Little bit of knockout, outside the components</li>
+            <li>Otherwise all vanilla JS, not even jQuery</li>
+            <li>Show HTML - ignore data-bind, comments</li>
+            <li>Builds a DOM from our domain language directly, no irrelevant details</li>
+            <li>Show header implementation</li>
+            <li>Show login element</li>
+            <li>Communicates through events</li>
+            <li>Can also communicate through content or attributes</li>
+            <li>DOM becomes communication medium</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2>Actually using this?</h2><div id="tableWrapper">
+          <table>
+            <thead>
+              <tr>
+                <th rowspan="2"></th>
+                <th rowspan="2">Specced</th>
+                <th colspan="5">Implementation</th>
+              </tr>
+              <tr>
+                <th>Polyfill</th>
+                <th>Chrome / Opera</th>
+                <th>Firefox</th>
+                <th>Safari</th>
+                <th>IE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Templates</th>
+                <td class="yes"><a href="https://html.spec.whatwg.org/multipage/scripting.html#the-template-element"></a></td>
+                <td class="yes"><a href="#polyfills"></a></td>
+                <td class="yes"><a href="http://www.chromestatus.com/features/5207287069147136">Stable</a></td>
+                <td class="yes"><a href="http://caniuse.com/#feat=template">Stable</a></td>
+                <td class="yes"><a href="http://caniuse.com/#feat=template">8</a></td>
+                <td class="no"></td>
+              </tr>
+              <tr>
+                <th>HTML Imports</th>
+                <td class="yes"><a href="http://w3c.github.io/webcomponents/spec/imports/"></a></td>
+                <td class="yes"><a href="#polyfills"></a></td>
+                <td class="yes"><a href="http://www.chromestatus.com/features/5144752345317376">Stable</a></td>
+                <td class="kinda"><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=877072">Behind flag</a></td>
+                <td class="no"></td>
+                <td class="no"></td>
+              </tr>
+              <tr>
+                <th>Custom Elements</th>
+                <td class="yes"><a href="http://w3c.github.io/webcomponents/spec/custom/"></a></td>
+                <td class="yes"><a href="#polyfills"></a></td>
+                <td class="yes"><a href="http://www.chromestatus.com/features/4642138092470272">Stable</a></td>
+                <td class="yes"><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=889230">Behind flag</a></td>
+                <td class="no"></td>
+                <td class="no"></td>
+              </tr>
+              <tr>
+                <th>Shadow DOM</th>
+                <td class="yes"><a href="http://w3c.github.io/webcomponents/spec/shadow/"></a></td>
+                <td class="yes"><a href="#polyfills"></a></td>
+                <td class="yes"><a href="http://www.chromestatus.com/features/4507242028072960">Stable</a></td>
+                <td class="yes"><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=806506">Behind flag</a></td>
+                <td class="no"></td>
+                <td class="no"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>(From <a href="http://jonrimmer.github.io/are-we-componentized-yet/">Are We Componentized Yet?</a>)</p>
+        <aside>
+          <ul>
+            <li>Polyfills from 9+</li>
+            <li>Web components are really a pattern though</li>
+            <li>A better way to build the web</li>
+            <li>Lots of frameworks moving this direction</li>
+            <li>This is the future of the web</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2 class="fullish-slide">Microservices</h2>
+        <aside>
+          <ul>
+            <li>Architectural pattern</li>
+            <li>Focused around building your architecture as small standalone processes</li>
+            <li>Netflix and Spotify</li>
+            <li>Best understood in comparison to...</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2>Monoliths</h2><img src="/images/monolith.png" style="width: 600px">
+        <aside>
+          <ul>
+            <li>Common pattern</li>
+            <li>Web app - controllers, views, models, internal logic</li>
+            <li>Easy, obvious, common</li>
+            <li>Downsides: everything is coupled together, no clear interfaces</li>
+            <li>Easy to get a big ball of mud</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2>Microservices</h2><img src="/images/microservices.png" style="width: 501px">
+        <aside>
+          <ul>
+            <li>Very generic example for contrast, see some specifics soon</li>
+            <li>Small processes</li>
+            <li>One to manage charging your customers</li>
+            <li>managing credit cards</li>
+            <li>auth</li>
+            <li>All calling each other, typically JSON/RESTful HTTP, or simple MQs</li>
+            <li>Explicit interfaces -> clear interactions</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2>Core principles:</h2>
+        <h3>
+          <ul class="bullet">
+            <li></li>
+            <li>Many standalone processes</li>
+            <li>Organised around functionality</li>
+            <li>All highly decoupled</li>
+            <li>Each with a single responsibility</li>
+          </ul>
+        </h3>
+        <aside>
+          <ul>
+            <li>Frequently a single file, just using express</li>
+            <li>Small enough to understand in one go</li>
+            <li></li>
+            <li>Focused on functionality, not nouns</li>
+            <li>Easier to stay small, typically more cohesive</li>
+            <li>Charging: take request, send there, record here</li>
+            <li></li>
+            <li>Decoupling is the main goal here; clear independent segments & interactions</li>
+            <li>Focusing on this makes previous step easier</li>
+            <li>Encapsulates details so they can change: different datastores, languages, etc</li>
+            <li>Notably this makes testing much easier, can drive design nicely with TDD</li>
+            <li>Can test them in combination</li>
+            <li></li>
+            <li>Important to focus on single responsibility</li>
+            <li>Helps decoupling of services & design</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2>Deploying all these?</h2>
+        <aside>
+          <ul>
+            <li>The obvious challenge</li>
+            <li>Forces you to automate - good thing</li>
+            <li>Once automation is in place, gives lots of power</li>
+            <li>Potential separation</li>
+            <li>Can scale each bit separately, or distribute</li>
+            <li>Can run versions in parallel - A/B testing components</li>
+            <li>HTTP means you can reuse standard tools - LB/caches</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2>But performance?!?</h2>
+        <aside>
+          <ul>
+            <li>People always worry about performance</li>
+            <li>Never as bad as it sounds</li>
+            <li>Firstly, wide, not deep</li>
+            <li>Can often be async - respond to user and kick off billing process in the background</li>
+            <li>Trades minimum latency for scalability</li>
+            <li>Can move things in proc as required - intentional tradeoff</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2 class="full-slide">Let's see it in action</h2>
+        <h4><a href="http://bit.ly/microservices-example">Source at bit.ly/microservices-example</a></h4>
+        <aside>
+          <ul>
+            <li>Note link to source</li>
+            <li>Auth is one service</li>
+            <li>Once authed, can load a list of comparisons for a user with a token</li>
+            <li>Service for that validates with auth server in the background</li>
+            <li>Can load individual comparison</li>
+            <li>Can add & update facets</li>
+            <li>Can also add or update items</li>
+            <li>We'll take a look at the code in a moment, first a diagram</li>
+          </ul>
+        </aside>
+      </section>
+      <section><img src="images/comparably-microservices.png" style="width:600px">
+        <aside>
+          <ul>
+            <li>Diagram for that</li>
+            <li>Auth on MongoDB, 2 query and 2 command services on Neo, standalone UI server</li>
+            <li>Looks complicated, pretty simple</li>
+            <li>Static serves UI</li>
+            <li>UI calls command query and auth services, could be facade as this expands</li>
+            <li>All of command and query use Neo, auth uses Mongo</li>
+            <li>Some of C/Q talk to auth service, not all</li>
+            <li>Let's look at the code</li>
+            <li></li>
+            <li>6 services</li>
+            <li>Auth - cohesive, easy to tell what's happening, easy to see what it exposes and what it doesn't</li>
+            <li>Facet command - similarly</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2>These are not technically the same thing</h2>
+        <aside>
+          <ul>
+            <li>Not the same</li>
+            <li>One is a new W3C spec for reusuable UI widgets</li>
+            <li>One is a high-level architectural pattern</li>
+            <li>But two shared principles</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2>Two Shared Principles</h2>
+        <h3>
+          <ul class="bullet">
+            <li></li>
+            <li>Encapsulation by default</li>
+            <li>Interaction through a common medium</li>
+          </ul>
+        </h3>
+        <aside>
+          <ul>
+            <li>First, process boundary/Shadow DOM</li>
+            <li>Isolation of implementation from app structure</li>
+            <li>Clear interactions</li>
+            <li>Adds pressure for better design, makes it harder <em>not</em> to decouple</li>
+            <li></li>
+            <li>Second, the interactivity is through a dumb common medium</li>
+            <li>RESTful HTTP and DOM attributes, content & events</li>
+            <li>Microservices & web components interact through the standard tools of their domain</li>
+            <li>Can embed non-WC elements</li>
+            <li>Can use load balancers and caches</li>
+            <li>Can easily debug and understand interfaces of both, just using existing tools</li>
+            <li></li>
+            <li>Not the first tools to offer this</li>
+            <li>OO pushed encapsulation forward, some platforms too, e.g. JavaBeans</li>
+            <li>JS itself; now a common platform for a wider ecosystem, with a driving culture of small standalone models</li>
+            <li></li>
+            <li>All pushing towards my final point, the core of the value of all of this</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2 class="fullish-slide">Modifiability</h2>
+        <h3>
+          <ul class="bullet">
+            <li></li>
+            <li>Change things easily, and with confidence</li>
+            <li>Use the best tools for the job</li>
+            <li>Iteratively evolve your implementation</li>
+          </ul>
+        </h3>
+        <aside>
+          <ul>
+            <li>Modifiability - a term I'm stealing from Martin Fowler</li>
+            <li>A fundamental part of evolutionary design, the ability to effectively iterate on app structure</li>
+            <li>Encapsulation by default and interactions over common medium don't give you this for free, but help</li>
+            <li></li>
+            <li>Structure of your application better represents the features of your application</li>
+            <li>language of your domain, design of your UI - makes it easy to understand & change high-level</li>
+            <li>Encapsulation also makes implementation changable, independently</li>
+            <li></li>
+            <li>You can use the best tools; components written in React or vanilla.js can interact</li>
+            <li>Rewrite your legacy webservices in Node, or move your algorithmic work to Haskell</li>
+            <li>External interface is understood by everything, rewrites are cheap</li>
+            <li></li>
+            <li>Finally, web components and microservices and more sharing these underlying concepts</li>
+            <li>All together gives you more and more power to develop designs with max flexibility, minimizing up-front work</li>
+            <li>And confidently <strong>independently</strong> evolve your structure and implementation details, as you build</li>
+          </ul>
+        </aside>
+      </section>
+      <section data-bespoke-state="finish">
+        <div>
+          <h1>Thank you</h1>
+          <address class="vcard">
+            <div class="author fn">Tim Perry</div>
+            <div class="note bio"><span>Tech Lead &amp; Open-Source Champion at&nbsp;</span><span class="org vcard"><a href="http://softwire.com" rel="group" class="org fn url">Softw<span class="i">i</span>re</a></span></div>
+            <ul class="urls">
+              <li><a href="http://tim-perry.co.uk" rel="me" class="url">tim-perry.co.uk</a></li>
+              <li><a href="http://github.com/pimterry" rel="me" class="url">github.com/pimterry</a></li>
+              <li><a href="http://twitter.com/pimterry" rel="me" class="nickname url">@pimterry</a></li>
+            </ul>
+          </address>
+        </div>
+        <aside>
+          <ul>
+            <li>Everything I have for you today</li>
+            <li>No time for questions, grab me later or ping me on twitter</li>
+            <li>You should also follow me on twitter if you'd like links to these slides</li>
+            <li>Thanks!</li>
+          </ul>
+        </aside>
+      </section>
+    </article>
+    <script src="build/build.js"></script>
+  </body>
+</html>
