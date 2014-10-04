@@ -34,6 +34,14 @@ html
                 a.url(href='http://github.com/pimterry',rel="me") github.com/pimterry
               li
                 a.nickname.url(href='http://twitter.com/pimterry',rel="me") @pimterry
+        aside
+          ul
+            li Good afternoon
+            li Tim Perry, I work at Softwire
+            li Talking about web components & microservices
+            li High-speed intro covering a lot of ground, not a how to
+            li Some examples of these in action
+            li And I want to talk about how these are related, and how that's useful more generally
 
       section
         img(src='/images/softwireLogo.png',class='logo-big',alt='Softwire')
@@ -136,24 +144,9 @@ html
             li HTML Imports
             li Shadow DOM
             li Custom Elements
-
-      section
-        h2 Current Templates
-        pre
-          code.language-markup.
-            &lt;div id="template1" style="display: none"&gt;
-              &lt;img src="/default-image.png" /&gt;
-              &lt;h3&gt;Cool image!&lt;/h3&gt;
-            &lt;/div&gt;
-
-      section
-        h2 Current Templates (Knockout)
-        pre
-          code.language-markup.
-            &lt;script type="text/html" id="template1"&gt;
-              &lt;img src="/default-image.png" /&gt;
-              &lt;h3&gt;Cool image!&lt;/h3&gt;
-            &lt;/script&gt;
+        aside
+          ul
+            li This is a set of 4 new w3c specs
 
       section
         h2 &lt;Template&gt;
@@ -330,6 +323,18 @@ html
 
         h4
           a(href='http://bit.ly/web-components-example') Source at bit.ly/web-components-example
+        aside
+          ul
+            li Site - Compare things, header, items, names, facets
+            li Tech - Little bit of knockout, outside the components
+            li Otherwise all vanilla JS, not even jQuery
+            li Show HTML - ignore data-bind, comments
+            li Builds a DOM from our domain language directly, no irrelevant details
+            li Show header implementation
+            li Show login element
+            li Communicates through events
+            li Can also communicate through content or attributes
+            li DOM becomes communication medium
 
       section
         h2 Actually using this?
@@ -390,41 +395,96 @@ html
         |   </table>
         | </div>
         p (From <a href="http://jonrimmer.github.io/are-we-componentized-yet/">Are We Componentized Yet?</a>)
+        aside
+          ul
+            li Polyfills from 9+
+            li Web components are really a pattern though
+            li A better way to build the web
+            li Lots of frameworks moving this direction
+            li This is the future of the web
 
       section
         h2.fullish-slide Microservices
+        aside
+          ul
+            li Architectural pattern
+            li Focused around building your architecture as small standalone processes
+            li Best understood in comparison to...
 
       section
         h2 Monoliths
         img(src='/images/monolith.png', style="width: 600px")
+        aside
+          ul
+            li Common pattern
+            li Web app - controllers, views, models, internal logic
+            li Easy, obvious, common
+            li Downsides: everything is coupled together, no clear interfaces
+            li Easy to get a big ball of mud
 
       section
         h2 Microservices
         img(src='/images/microservices.png', style="width: 501px")
+        aside
+          ul
+            li Very generic example for contrast, see some specifics soon
+            li Small processes
+            li One to manage charging your customers
+            li managing credit cards
+            li auth
+            li All calling each other, typically JSON/RESTful HTTP, or simple MQs
+            li Explicit interfaces -> clear interactions
+
 
       section
         h2 Core principles:
         h3
           ul.bullet
             li
-            li Standalone processes
-            li Highly decoupled
+            li Many standalone processes
             li Organised around functionality
-            li Single responsibility
+            li All highly decoupled
+            li Each with a single responsibility
+        aside
+          ul
+            li Frequently a single file, just using express
+            li Small enough to understand in one go
+            li
+            li Focused on functionality, not nouns
+            li Easier to stay small, typically more cohesive
+            li Charging: take request, send there, record here
+            li
+            li Decoupling is the main goal here; clear independent segments & interactions
+            li Focusing on this makes previous step easier
+            li Encapsulates details so they can change: different datastores, languages, etc
+            li Notably this makes testing much easier, can drive design nicely with TDD
+            li Can test them in combination
+            li
+            li Important to focus on single responsibility
+            li Helps decoupling of services & design
 
       section
         h2 Deploying all these?
-
-      section
-        h2 But performance?!??!??!??
-
-      section
-        h2 Other challenges
         aside
           ul
-            li Consistency
-            li Monitoring
-            li How to split them up?
+            li The obvious challenge
+            li Forces you to automate - good thing
+            li Once automation is in place, gives lots of power
+            li Potential separation
+            li Can scale each bit separately, or distribute
+            li Can run versions in parallel - A/B testing components
+            li HTTP means you can reuse standard tools - LB/caches
+
+      section
+        h2 But performance?!?
+        aside
+          ul
+            li People always worry about performance
+            li Never as bad as it sounds
+            li Firstly, wide, not deep
+            li Can often be async - respond to user and kick off billing process in the background
+            li Trades minimum latency for scalability
+            li Can move things in proc as required - intentional tradeoff
 
       section
         h2.full-slide Let's see it in action
@@ -461,23 +521,67 @@ html
 
       section
         h2 These are not technically the same thing
+        aside
+          ul
+            li Not the same
+            li One is a new W3C spec for reusuable UI widgets
+            li One is a high-level architectural pattern
+            li But two shared principles
 
       section
         h2 Two Shared Principles
         h3
           ul.bullet
             li
-            li Defined encapsulation and interfaces
-            li Interaction through a common dumb medium
+            li Encapsulation by default
+            li Interaction through a common medium
+        aside
+          ul
+            li First, process boundary/Shadow DOM
+            li Isolation of implementation from app structure
+            li Clear interactions
+            li Adds pressure for better design, makes it harder <em>not</em> to decouple
+            li
+            li Second, the interactivity is through a dumb common medium
+            li RESTful HTTP and DOM attributes, content & events
+            li Microservices & web components interact through the standard tools of their domain
+            li Can embed non-WC elements
+            li Can use load balancers and caches
+            li Can easily debug and understand interfaces of both, just using existing tools
+            li
+            li Not the first tools to offer this
+            li OO pushed encapsulation forward, some platforms too, e.g. JavaBeans
+            li JS itself; now a common platform for a wider ecosystem, with a driving culture of small standalone models
+            li
+            li All pushing towards my final point, the core of the value of all of this
 
       section
-        h2.fullish-slide EVOLVABILITY
+        h2.fullish-slide Modifiability
         h3
           ul.bullet
             li
+            li Change things easily, and with confidence
             li Use the best tools for the job
-            li Focus agility where it matters
-            li Make everything disposable
+            li Iteratively evolve your implementation
+        aside
+          ul
+            li This gives you modifiability, a term I'm stealing from Martin Fowler
+            li A fundamental part of evolutionary design, the ability to effectively iterate on app structure
+            li
+            li Structure of your application better represents the features of your application, language of your domain
+            li Useful, because high-level designs changes much less frequently that low-level implementation
+            li Rarely change the fact that you can login to the site
+            li Much more likely to change how you login, add 2FA, simplify sign-up process
+            li That's exactly what both these designs provide
+            li Both structure and implementation can be independently changeable
+            li
+            li You can use the best tools; components written in React or vanilla.js can interact
+            li Rewrite your legacy webservices in Node, or move your algorithmic work to Haskell
+            li External interface is understood by everything, rewrites are cheap
+            li
+            li Web components and microservices and more share these underlying concepts
+            li All gives you more and more power to evolve designs with max flexibility, minimizing up-front work
+
 
       section(data-bespoke-state="finish")
         div
@@ -495,5 +599,11 @@ html
                 a.url(href='http://github.com/pimterry',rel="me") github.com/pimterry
               li
                 a.nickname.url(href='http://twitter.com/pimterry',rel="me") @pimterry
+        aside
+          ul
+            li Everything I have for you today
+            li No time for questions, grab me later or ping me on twitter
+            li You should also follow me on twitter if you'd like links to these slides
+            li Thanks!
 
     script(src='build/build.js')
