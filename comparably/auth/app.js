@@ -55,23 +55,6 @@ app.get('/validate/token/:token', function (req, res) {
     });
 });
 
-// Creates a new user. Returns with the 'username' and a valid login 'token'
-app.post('/user/:username/create', function (req, res) {
-    var username = req.params.username;
-    var password = req.body;
-
-    var token = generateToken();
-    var user = new User({name: username, password: password, token: token});
-
-    user.save(function (err) {
-        if (err) {
-            res.status(500).send(err);
-        } else {
-            res.json({ username: user.name, token: user.token });
-        }
-    });
-});
-
 
 var port = process.env.PORT || 8085;
 
