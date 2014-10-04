@@ -26,5 +26,7 @@ Microservices:
 Both:
 * Encapsulation!
 * Common medium!
-* = EVOLVABILITY
+* = Modifiability
+    - designs that are ameanable the change where it's important
+    - Allows what Martin Fowler calls Evolutionary Design
 * = Polyglot everything, disposable everything = agility agility agility
