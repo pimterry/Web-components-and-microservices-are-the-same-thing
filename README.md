@@ -1,4 +1,4 @@
-# What the hell are Web Components
+# Web Components And Microservices Are The Same Thing
 > A [Bespoke.js](http://markdalgleish.com/projects/bespoke.js) presentation, built with [generator-bespoke](https://github.com/markdalgleish/generator-bespoke)
 
 ## View slides locally
@@ -15,3 +15,7 @@ Then, install dependencies and run the preview server:
 $ npm install && bower install
 $ gulp serve
 ```
+
+## View example source
+
+Take a look in the comparably folder. Each folder there contains a microservice, including comparably/client, which primarily consists of a UI built up from web components.
