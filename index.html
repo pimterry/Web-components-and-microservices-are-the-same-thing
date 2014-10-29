@@ -34,7 +34,7 @@
           </ul>
         </aside>
       </section>
-      <section><img src="images/softwireLogo.png" alt="Softwire" class="logo-big"></section>
+      <section><img src="/images/softwireLogo.png" alt="Softwire" class="logo-big"></section>
       <section>
         <h2>Web Components</h2><template id="navbar">
          <style>@import 'http://getbootstrap.com/dist/css/bootstrap.min.css';</style>
@@ -392,14 +392,14 @@ document.registerElement('nav-bar', {
         <aside>
           <ul>
             <li>Architectural pattern</li>
-            <li>Focused around building your architecture as small standalone processes</li>
             <li>Netflix and Spotify</li>
+            <li>Focused around building your architecture as small standalone processes</li>
             <li>Best understood in comparison to...</li>
           </ul>
         </aside>
       </section>
       <section>
-        <h2>Monoliths</h2><img src="images/monolith.png" style="width: 600px">
+        <h2>Monoliths</h2><img src="/images/monolith.png" style="width: 600px">
         <aside>
           <ul>
             <li>Common pattern</li>
@@ -411,7 +411,7 @@ document.registerElement('nav-bar', {
         </aside>
       </section>
       <section>
-        <h2>Microservices</h2><img src="images/microservices.png" style="width: 501px">
+        <h2>Microservices</h2><img src="/images/microservices.png" style="width: 501px">
         <aside>
           <ul>
             <li>Very generic example for contrast, see some specifics soon</li>
@@ -563,7 +563,8 @@ document.registerElement('nav-bar', {
         <h3>
           <ul class="bullet">
             <li></li>
-            <li>Change things easily, and with confidence</li>
+            <li>Change component implementations independently</li>
+            <li>Restructure architecture safely</li>
             <li>Use the best tools for the job</li>
             <li>Iteratively evolve your implementation</li>
           </ul>
@@ -574,12 +575,13 @@ document.registerElement('nav-bar', {
             <li>A fundamental part of evolutionary design, the ability to effectively iterate on app structure</li>
             <li>Encapsulation by default and interactions over common medium don't give you this for free, but help</li>
             <li></li>
+            <li>Lets you change interals confidently</li>
+            <li>Lets you change internals and architecture independently</li>
             <li>Structure of your application better represents the features of your application</li>
             <li>language of your domain, design of your UI - makes it easy to understand & change high-level</li>
-            <li>Encapsulation also makes implementation changable, independently</li>
             <li></li>
             <li>You can use the best tools; components written in React or vanilla.js can interact</li>
-            <li>Rewrite your legacy webservices in Node, or move your algorithmic work to Haskell</li>
+            <li>Rewrite your legacy webservices in Ruby, or move your algorithmic work to Haskell</li>
             <li>External interface is understood by everything, rewrites are cheap</li>
             <li></li>
             <li>Finally, web components and microservices and more sharing these underlying concepts</li>
