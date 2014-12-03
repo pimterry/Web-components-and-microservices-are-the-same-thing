@@ -23,6 +23,12 @@ module.exports = function () {
             }
         });
 
+        function buildNotesPage(noteContent) {
+            return "<div style='font-size: 40px; font-weight: bold'>" + 
+                    noteContent +
+                   "</div>"
+        }
+
         function openWindow() {
             var newWindow = window.open("", "bespoke-notes");
 
@@ -33,7 +39,7 @@ module.exports = function () {
                 }
 
                 if (e.data) {
-                    body.innerHTML = e.data;
+                    body.innerHTML = buildNotesPage(e.data);
                 }
             });
 
