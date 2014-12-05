@@ -34,10 +34,10 @@
           </ul>
         </aside>
       </section>
-      <section><img src="images/softwireLogo.png" alt="Softwire" class="logo-big"></section>
+      <section><img src="/images/softwireLogo.png" alt="Softwire" class="logo-big"></section>
       <section>
         <h2>Web Components</h2><template id="navbar">
-         <style>@import 'build/bootstrap.min.css';</style>
+         <style>@import 'http://getbootstrap.com/dist/css/bootstrap.min.css';</style>
          <div class="bs-example bs-navbar-top-example">
            <nav class="navbar navbar-default navbar-inverse" role="navigation">
              <div class="container-fluid">
@@ -274,9 +274,8 @@ document.registerElement('nav-bar', {
 &lt;/nav-bar&gt;
 </code></pre>
       </section>
-      <section>
-        <h2>Nav-Bar Web Component</h2>
-        <pre style="font-size:53%; padding: 15px 16px !important"><code class="language-javascript">&lt;template id="navBarTemplate"&gt;
+      <section style="padding: 0">
+        <pre style="font-size:70%; padding: 15px 16px !important"><code class="language-markup">&lt;template id="navBarTemplate"&gt;
   &lt;div class="bs-example bs-navbar-top-example"&gt;
     &lt;nav class="navbar navbar-default navbar inverse"&gt;
       ...
@@ -296,9 +295,9 @@ document.registerElement('nav-bar', {
   };
   
   document.registerElement('nav-bar', {
-      prototype: NavBarPrototype
+    prototype: NavBarPrototype
   });           
-&lt;/script&gt; 
+&lt;/script&gt;    
 </code></pre>
       </section>
       <section>
@@ -399,7 +398,7 @@ document.registerElement('nav-bar', {
         </aside>
       </section>
       <section>
-        <h2>Monoliths</h2><img src="images/monolith.png" style="width: 600px">
+        <h2>Monoliths</h2><img src="/images/monolith.png" style="width: 600px">
         <aside>
           <ul>
             <li>Common pattern</li>
@@ -411,7 +410,7 @@ document.registerElement('nav-bar', {
         </aside>
       </section>
       <section>
-        <h2>Microservices</h2><img src="images/microservices.png" style="width: 501px">
+        <h2>Microservices</h2><img src="/images/microservices.png" style="width: 501px">
         <aside>
           <ul>
             <li>Very generic example for contrast, see some specifics soon</li>
